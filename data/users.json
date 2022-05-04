@@ -1,0 +1,90 @@
+[
+  {
+    "username": "Gelios",
+    "email": "Gelios@gmail.com",
+    "password": "Gelios_pwd",
+    "confirmed": true,
+    "about_me": "Sun 24/7",
+    "breed": "Russian Ginger",
+    "status": "Happy!",
+    "last_seen": "2021-05-15",
+    "zip_code": "94070"
+  },
+  {
+    "username": "fatvilly",
+    "email": "fatvilly@gmail.com",
+    "password": "fatvilly_pwd",
+    "confirmed": true,
+    "about_me": "CatBlogger",
+    "breed": "Mixin",
+    "status": "Feeling crazy!",
+    "last_seen": "2021-07-30",
+    "zip_code": "94060"
+  },
+  {
+    "username": "imblackmax",
+    "email": "imblackmax@gmail.com",
+    "password": "imblackmax_pwd",
+    "confirmed": true,
+    "about_me": "Young, crazy kitten",
+    "breed": "Bombay",
+    "status": "On a raw diet",
+    "last_seen": "2022-04-03",
+    "zip_code": "94071"
+  },
+  {
+    "username": "thecatbkk",
+    "email": "thecatbkk@gmail.com",
+    "password": "thecatbkk_pwd",
+    "confirmed": false,
+    "about_me": "Thailand explorer",
+    "breed": "Persian",
+    "status": "",
+    "last_seen": "2022-04-15",
+    "zip_code": "94064"
+  },
+  {
+    "username": "bengal_boeing",
+    "email": "bengal_boeing@gmail.com",
+    "password": "bengal_boeing_pwd",
+    "confirmed": true,
+    "about_me": "Blogger",
+    "breed": "Bengal",
+    "status": "Bored",
+    "last_seen": "2022-05-04",
+    "zip_code": "94095"
+  },
+  {
+    "username": "luckys_olaff",
+    "email": "luckys_olaff@gmail.com",
+    "password": "luckys_olaff_pwd",
+    "confirmed": true,
+    "about_me": "Champion FARUS, WCF",
+    "breed": "Ragdoll",
+    "status": "Open for mating",
+    "last_seen": "2022-01-24",
+    "zip_code": "95088"
+  },
+  {
+    "username": "_phill_bengal",
+    "email": "phill_bengal@gmail.com",
+    "password": "_phill_bengal_pwd",
+    "confirmed": true,
+    "about_me": "",
+    "breed": "",
+    "status": "",
+    "last_seen": "2022-02-05",
+    "zip_code": "98076"
+  },
+  {
+    "username": "KoshMars",
+    "email": "KoshMars@gmail.com",
+    "password": "KoshMars_pwd",
+    "confirmed": true,
+    "about_me": "Movie critic",
+    "breed": "Oriental",
+    "status": "Watching movies",
+    "last_seen": "2022-02-27",
+    "zip_code": "63099"
+  }
+]
