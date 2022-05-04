@@ -22,6 +22,14 @@ class User(db.Model):
     status = db.Column(db.String(50))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     zip_code = db.Column(db.Integer, nullable=False)
+    image_file = db.Column(db.String(100), nullable=False, default="default.jpg")
+
+    sent_messages = db.relationship("Message", foreign_keys='[Message.sender_id]',
+                                    back_populates="sender",
+                                    cascade="all, delete")
+    received_messages = db.relationship("Message", foreign_keys='[Message.recipient_id]',
+                                        back_populates="recipient",
+                                        cascade="all, delete")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email} zip_code={self.zip_code}>"
@@ -55,6 +63,25 @@ class User(db.Model):
     @classmethod
     def all_users(cls):
         return cls.query.all()
+
+
+class Message(db.Model):
+    """Data model for a message."""
+
+    __tablename__ = "messages"
+
+    message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    message_text = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    sender_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    recipient_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+
+    sender = db.relationship("User", foreign_keys=[sender_id], back_populates="sent_messages")
+    recipient = db.relationship("User", foreign_keys=[recipient_id],
+                                back_populates="received_messages")
+
+    def __repr__(self):
+        return f"<Message message_id={self.message_id} message_text={self.message_text[:10]}>"
 
 
 class Image(db.Model):
@@ -110,24 +137,24 @@ class Comment(db.Model):
         return f"<Comment comment_id={self.comment_id} comment_text={self.comment_text[:10]}>"
 
 
-# class Like(db.Model):
-#     """Data model for a like."""
-#
-#     __tablename__ = "likes"
-#
-#     like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     like_type = db.Column(db.String, nullable=False)
-#
-#     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-#     image_id = db.Column(db.Integer, db.ForeignKey("images.image_id"))
-#     comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"))
-#
-#     user = db.relationship("User", backref="likes")
-#     image = db.relationship("Image", backref="likes")
-#     comment = db.relationship("Comment", backref="likes")
-#
-#     def __repr__(self):
-#         return f"<Like like_id={self.like_id} like_type={self.like_type}>"
+class Like(db.Model):
+    """Data model for a like."""
+
+    __tablename__ = "likes"
+
+    like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    like_type = db.Column(db.String, nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    image_id = db.Column(db.Integer, db.ForeignKey("images.image_id"))
+    comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"))
+
+    user = db.relationship("User", backref="likes")
+    image = db.relationship("Image", backref="likes")
+    comment = db.relationship("Comment", backref="likes")
+
+    def __repr__(self):
+        return f"<Like like_id={self.like_id} like_type={self.like_type}>"
 
 
 class Follower(db.Model):
@@ -138,6 +165,7 @@ class Follower(db.Model):
     followers_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), index=True)
     following_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), index=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
     # ToDo: how to backref user_id and following_id?
     # __table_args__ = (
     #     db.Index('follower_index', "followers_id", "following_id", unique=True),
@@ -147,24 +175,6 @@ class Follower(db.Model):
 
     def __repr__(self):
         return f"<Follower follower_id={self.follower_id}>"
-
-
-# class Message(db.Model):
-#     """Data model for a message."""
-#
-#     __tablename__ = "messages"
-#
-#     message_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     message_text = db.Column(db.Text, nullable=False)
-#     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-#     sender_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-#     recipient_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-#
-#     sender = db.relationship("User", backref="messages")
-#     recipient = db.relationship("User", backref="messages")
-#
-#     def __repr__(self):
-#         return f"<Message message_id={self.message_id} message_text={self.message_text[:10]}>"
 
 
 class FreeItem(db.Model):
