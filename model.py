@@ -34,6 +34,9 @@ class User(db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email} zip_code={self.zip_code}>"
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
     def ping(self):
         self.last_seen = datetime.utcnow()
         db.session.add(self)

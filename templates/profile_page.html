@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }} • Catsbe{% endblock %}
+
+{% block body %}
+<h1>{{ user.username }}</h1>
+<div id="container"></div>
+
+{% endblock %}
+
+{% block js %}
+<script src="/static/js/userProfile.jsx" type="text/jsx"></script>
+{% endblock %}
