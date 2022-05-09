@@ -1,7 +1,9 @@
 """Server for catsbe app."""
+import json
 import os
 
 import requests
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from jinja2 import StrictUndefined
 from requests.auth import HTTPBasicAuth
@@ -11,10 +13,13 @@ from model import connect_to_db, User
 app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+load_dotenv()
 
-ZIP_CODE_API = os.getenv('ZIP_CODE_API', None)
-EMAIL = os.getenv('EMAIL', None)
-PASSWORD = os.getenv('PASSWORD', None)
+ZIP_CODE_API = os.environ.get('ZIP_CODE_API', None)
+EMAIL = os.environ.get('EMAIL', None)
+PASSWORD = os.environ.get('PASSWORD', None)
+PETFINDER_CLIENT_ID = os.environ.get('PETFINDER_CLIENT_ID', None)
+PETFINDER_CLIENT_SECRET = os.environ.get('PETFINDER_CLIENT_SECRET', None)
 
 
 @app.route("/")
@@ -54,25 +59,16 @@ def all_users():
     return render_template("all_users.html", users=users)
 
 
-# @app.route("/users/<user_id>")
-# def show_user(user_id):
-#     """Show details on a particular user."""
-#
-#     user = User.get_by_id(user_id)
-#
-#     return render_template("profile_page.html", user=user)
-
 def get_city(zip_code):
     city_req = requests.get(
         f"https://service.zipapi.us/zipcode/{zip_code}?X-API-KEY={ZIP_CODE_API}&fields=geolocation,population",
         auth=HTTPBasicAuth(EMAIL, PASSWORD))
-    print("city_req=", city_req)
     response = city_req.json()
     city = zip_code
     try:
         city = response["data"]["city"]
     except KeyError as e:
-        pass
+        print(e)
     return city
 
 
@@ -80,11 +76,9 @@ def get_city(zip_code):
 def user():
     if "user_id" in session:
         user_id = session["user_id"]
-        user = User.get_by_id(user_id)
-        print(user)
-        user_as_dict = user.as_dict()
-        user_as_dict["city"] = get_city(user_as_dict["zip_code"])
-
+        current_user = User.get_by_id(user_id)
+        user_as_dict = current_user.as_dict()
+        # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
         return user_as_dict
 
 
@@ -94,8 +88,69 @@ def users():
     users_list = []
     for user_obj in all_users:
         users_list.append(user_obj.as_dict())
-    print(users_list)
     return jsonify({"users": users_list})
+
+
+@app.route("/cats.json")
+def cats():
+    """Makes a request to Petfinder's API to retrieve 3 cats available for adoption in 20 miles
+    radius from the user's location.
+    """
+
+    user_zip_code = None
+    if "user_id" in session:
+        user_id = session["user_id"]
+        current_user = User.get_by_id(user_id)
+        user_zip_code = current_user.zip_code
+        print("user_zip_code=", user_zip_code)
+
+    def get_cats():
+        data = {
+            "grant_type": "client_credentials",
+            "client_id": f"{PETFINDER_CLIENT_ID}",
+            "client_secret": f"{PETFINDER_CLIENT_SECRET}"
+        }
+
+        url = "https://api.petfinder.com/v2/oauth2/token"
+
+        response_get_token = requests.post(url, data=json.dumps(data))
+        if response_get_token.status_code == 200:
+            token = response_get_token.json()["access_token"]
+            headers = {"Authorization": f"Bearer {token}"}
+
+            cats_req = requests.get(f"https://api.petfinder.com/v2/animals?type=cat&status"
+                                    f"=adoptable&location={user_zip_code}&distance=20&limit=3",
+                                    headers=headers)
+            return cats_req.json()
+
+    cats_petfinder = get_cats()
+
+    cats_list = []
+    for cat in cats_petfinder["animals"]:
+        cats_dict = {}
+        try:
+            cats_dict = {"name": cat["name"], "url": cat["url"],
+                         "img": cat["primary_photo_cropped"]["small"],
+                         "color": cat["colors"]["primary"],
+                         "age": cat["age"], "gender": cat["gender"],
+                         "description": cat["description"],
+                         "city": cat["contact"]["address"]["city"]}
+            if "&amp;#39;" in cat["description"]:
+                cats_dict["description"] = cat["description"].replace("&amp;#39;", "'")
+        except (KeyError, TypeError) as e:
+            print(e)
+        finally:
+            cats_list.append(cats_dict)
+    return jsonify({"cats": cats_list})
+
+
+# @app.route("/users/<user_id>")
+# def show_user(user_id):
+#     """Show details on a particular user."""
+#
+#     user = User.get_by_id(user_id)
+#
+#     return render_template("profile_page.html", user=user)
 
 
 # @app.route("/movies")
