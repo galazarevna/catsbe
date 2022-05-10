@@ -130,3 +130,7 @@ dmypy.json
 
 # IDE files
 .idea/
+
+# Test file for debugging
+test.py
+
