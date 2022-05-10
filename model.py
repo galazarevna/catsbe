@@ -22,7 +22,7 @@ class User(db.Model):
     status = db.Column(db.String(50))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     zip_code = db.Column(db.Integer, nullable=False)
-    image_file = db.Column(db.String(100), nullable=False, default="default.jpg")
+    image_file = db.Column(db.String(100), nullable=False, default="static/img/default.jpg")
 
     sent_messages = db.relationship("Message", foreign_keys='[Message.sender_id]',
                                     back_populates="sender",
@@ -66,6 +66,12 @@ class User(db.Model):
     @classmethod
     def all_users(cls):
         return cls.query.all()
+
+    @classmethod
+    def update_profile_img(cls, user_id, img_url):
+        user = cls.query.get(user_id)
+        user.image_file = img_url
+        db.session.commit()
 
 
 class Message(db.Model):

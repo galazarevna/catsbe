@@ -4,6 +4,7 @@ function UserProfile() {
     const [about_me, setAboutMe] = React.useState("");
     const [zip_code, setZipCode] = React.useState(0);
     const [last_seen, setLastSeen] = React.useState("");
+    const [image_file, setImageFile] = React.useState("");
     const [city, setCity] = React.useState("");
 
 
@@ -16,6 +17,7 @@ function UserProfile() {
             setZipCode(result.zip_code);
             setAboutMe(result.about_me);
             setLastSeen(result.last_seen);
+            setImageFile(result.image_file);
             setCity(result.city);
         });
       }, []);
@@ -24,7 +26,7 @@ function UserProfile() {
 
     return (
         <div className="profile">
-        <img src="/static/img/default.jpg" alt="profile" />
+        <img src={image_file} alt="profile" />
         <p>Name: {user}</p>
         <p>About me: {about_me}</p>
         <p>From: <a href={location}> {city}</a></p>
@@ -82,6 +84,39 @@ function AdoptCatNearMe(props) {
   );
 }
 
+function AddImage() {
+  const [image, setImage] = React.useState("");
+  const [url, setUrl] = React.useState("");
+  const uploadImage = () => {
+    const data = new FormData();
+    data.append("file", image);
+    fetch("/upload_file", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setUrl(data.url);
+      })
+      .catch((err) => console.log(err));
+  };
+  return (
+    <div>
+      <div>
+        <input
+          type="file"
+          onChange={(e) => setImage(e.target.files[0])}
+        ></input>
+        <button onClick={uploadImage}>Upload</button>
+      </div>
+      <div>
+        <h1>Uploaded image will be displayed here</h1>
+        <img src={url} />
+      </div>
+    </div>
+  );
+};
+
 
 function User(props) {
   return (
@@ -122,6 +157,7 @@ function AllUsersContainer(props) {
   return (
     <React.Fragment>
       <UserProfile />
+      <AddImage />
       <h2>All Users</h2>
       <div className="grid">{all_users}</div>
       <AdoptCatNearMe />
