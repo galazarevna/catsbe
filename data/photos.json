@@ -1,0 +1,26 @@
+[
+  {
+    "description": "Cat with a glass of yummies",
+    "img_url": "static/uploads/gelios_yummy.jpeg",
+    "date_uploaded": "2021-05-15",
+    "user_id": "1"
+  },
+  {
+    "description": "Happy easter!",
+    "img_url": "static/uploads/happy_easter.jpeg",
+    "date_uploaded": "2021-05-15",
+    "user_id": "1"
+  },
+  {
+    "description": "Chilling...",
+    "img_url": "static/uploads/chilling.jpeg",
+    "date_uploaded": "2021-05-15",
+    "user_id": "1"
+  },
+  {
+    "description": "Enjoy your meal!",
+    "img_url": "static/uploads/enjoy_your_meal.jpeg",
+    "date_uploaded": "2021-05-15",
+    "user_id": "1"
+  }
+]

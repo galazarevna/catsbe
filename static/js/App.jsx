@@ -69,6 +69,7 @@ function App() {
       <Header />
       <UserProfile />
       <AddImage />
+      <AllPhotosContainer />
       <AllUsersContainer />
       <AdoptCatNearMe />
       <Footer />

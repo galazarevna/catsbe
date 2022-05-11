@@ -107,13 +107,16 @@ class Image(db.Model):
     user = db.relationship("User", backref="images")
 
     def __repr__(self):
-        return f"<Image image_id={self.image_id} description={self.description}>"
+        return f"<Image image_id={self.image_id} description={self.description} user_id={self.user_id}>"
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @classmethod
-    def create(cls, description):
+    def create(cls, description, img_url, date_uploaded, user_id):
         """Create and return a new image."""
 
-        return cls(title=description)
+        return cls(description=description, img_url=img_url, date_uploaded=date_uploaded, user_id=user_id)
 
     @classmethod
     def all_images(cls):
@@ -122,10 +125,9 @@ class Image(db.Model):
         return cls.query.all()
 
     @classmethod
-    def get_by_id(cls, image_id):
+    def get_images_by_user_id(cls, user_id):
         """Return an image by primary key."""
-
-        return cls.query.get(image_id)
+        return cls.query.filter_by(user_id=user_id).all()
 
 
 class Comment(db.Model):

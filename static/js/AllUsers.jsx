@@ -10,7 +10,7 @@ function User(props) {
   );
 }
 
-function AllUsersContainer(props) {
+function AllUsersContainer() {
   const [users, setUsers] = React.useState([]);
 
   React.useEffect(() => {
