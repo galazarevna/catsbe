@@ -7,8 +7,65 @@ function Photo(props) {
   );
 }
 
+function AddPhoto(props) {
+  const [description, setDescription] = React.useState("");
+  const [image, setImage] = React.useState("");
+  const [imgUrl, setImgUrl] = React.useState("");
+  function addNewPhoto() {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("description", description);
+    fetch('/add-photo', {
+      method: "POST",
+      body: data
+  })
+    .then(response => response.json())
+    .then((data) => {
+      const photoAdded = data.photoAdded;
+      setImgUrl(photoAdded.img_url);
+      // turn ^ this line into a function, which we then invoke
+      // function urlSetter(obj) {
+      //   return obj;
+      //   }
+        
+        // setImgUrl(urlSetter(photoAdded));
+      const {image_id: imageId, description: description, img_url: imgUrl} = photoAdded;
+      props.addPhoto(imageId, description, imgUrl);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  return (
+  <React.Fragment>
+    <h2>Add New Photo</h2>
+    <label htmlFor="descriptionInput">
+      Description
+      <input
+        value={description}
+        onChange={event => setDescription(event.target.value)}
+        id="descriptionInput"
+        style={{marginLeft: '5px'}}
+      />
+    </label>
+    <label htmlFor="photoUpload" style={{marginLeft: '10px', marginRight: '5px'}}>
+        <input type="file" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
+      </label>
+    <button type="button" style={{marginLeft: '10px'}} onClick={addNewPhoto} >
+      Add Photo!
+    </button>
+    <img src={imgUrl} />
+  </React.Fragment>
+);
+}
+
 function AllPhotosContainer() {
   const [photos, setPhotos] = React.useState([]);
+
+  function addPhoto(imageId, description, imgUrl) {
+    const newPhoto = {imageId, description, imgUrl};
+    const currentPhotos = [...photos];
+    setPhotos([...currentPhotos, newPhoto]);
+  }
 
   React.useEffect(() => {
     fetch('/photos.json')
@@ -19,12 +76,11 @@ function AllPhotosContainer() {
   const all_photos = [];
 
   for (const photo of photos) {
+    console.log(photo);
     all_photos.push(
       <Photo
         description={photo.description}
         imgUrl={photo.img_url}
-        dateUploaded={photo.date_uploaded}
-        userId={photo.user_id}
         key={photo.image_id}
       />,
     );
@@ -32,6 +88,7 @@ function AllPhotosContainer() {
 
   return (
     <React.Fragment>
+      <AddPhoto addPhoto={addPhoto} />
       <h2>All Photos</h2>
       <div className="grid">{all_photos}</div>
     </React.Fragment>

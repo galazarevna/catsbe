@@ -1,6 +1,7 @@
 """Server for catsbe app."""
 import json
 import os
+from datetime import datetime
 
 import filetype
 import requests
@@ -11,6 +12,7 @@ from jinja2 import StrictUndefined
 from requests.auth import HTTPBasicAuth
 from werkzeug.utils import secure_filename
 
+import model
 from model import connect_to_db, User, Image
 
 app = Flask(__name__)
@@ -37,6 +39,13 @@ def homepage():
         current_user = User.get_by_id(user_id)
         return render_template("profile_page.html", user=current_user)
     return render_template("homepage.html")
+
+
+@app.route("/all_users_on_map")
+def all_users_on_map():
+    """View all users nearby on Google maps."""
+
+    return render_template("all_users_on_map.html")
 
 
 def validate_image(filename):  # path to file
@@ -66,6 +75,8 @@ def upload_file():
         uploaded_file = None
         try:
             uploaded_file = request.files["file"]
+            print("uploaded_file=", uploaded_file)
+
         except KeyError as e:
             print(e)
         if not uploaded_file:
@@ -94,6 +105,43 @@ def all_photos():
         for img_obj in images:
             images_list.append(img_obj.as_dict())
     return jsonify({"images": images_list})
+
+
+@app.route("/add-photo", methods=["POST"])
+def add_photo():
+    """Add a new photo to DB images table."""
+
+    new_photo = None
+    uploaded_file = None
+    path = None
+    description = request.form.get("description")
+    print("description=", description)
+    date_uploaded = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    if "user_id" in session:
+        user_id = session["user_id"]
+        try:
+            uploaded_file = request.files["file"]
+            print("uploaded_file=", uploaded_file)
+        except KeyError as e:
+            print(e)
+        if not uploaded_file:
+            return "No image provided", 400
+        filename = secure_filename(uploaded_file.filename)
+        if filename != "":
+            file_ext = os.path.splitext(filename)[1]
+            if file_ext not in app.config["UPLOAD_EXTENSIONS"] or \
+                    file_ext != validate_image(uploaded_file):
+                return "Invalid image", 400
+            uploaded_file.seek(0)
+            path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
+            uploaded_file.save(path)
+
+        image = Image.create(description=description, img_url=path, date_uploaded=date_uploaded, user_id=user_id)
+        model.db.session.add(image)
+        model.db.session.commit()
+        new_photo = image.as_dict()
+    print("new_photo=", new_photo)
+    return jsonify({"photoAdded": new_photo})
 
 
 @app.route("/login", methods=["POST"])
@@ -199,6 +247,7 @@ def cats():
             cats_dict["img"] = cats_dict.get("img", "/static/img/default.jpg")
             cats_list.append(cats_dict)
     return jsonify({"cats": cats_list})
+
 
 
 if __name__ == "__main__":

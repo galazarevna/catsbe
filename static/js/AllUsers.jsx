@@ -41,3 +41,15 @@ function AllUsersContainer() {
     </React.Fragment>
   );
 }
+
+function AllUsersOnMap() {
+   return (
+    <React.Fragment>
+      <Header />
+      <AllUsersContainer />
+      <Footer />
+    </React.Fragment>
+  );
+}
+
+ReactDOM.render(<AllUsersOnMap />, document.querySelector('#container'));
