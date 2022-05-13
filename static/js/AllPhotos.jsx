@@ -10,7 +10,6 @@ function Photo(props) {
 function AddPhoto(props) {
   const [description, setDescription] = React.useState("");
   const [image, setImage] = React.useState("");
-  const [imgUrl, setImgUrl] = React.useState("");
   function addNewPhoto() {
     const data = new FormData();
     data.append("file", image);
@@ -18,59 +17,53 @@ function AddPhoto(props) {
     fetch('/add-photo', {
       method: "POST",
       body: data
-  })
-    .then(response => response.json())
-    .then((data) => {
-      const photoAdded = data.photoAdded;
-      setImgUrl(photoAdded.img_url);
-      // turn ^ this line into a function, which we then invoke
-      // function urlSetter(obj) {
-      //   return obj;
-      //   }
-        
-        // setImgUrl(urlSetter(photoAdded));
-      const {image_id: imageId, description: description, img_url: imgUrl} = photoAdded;
-      props.addPhoto(imageId, description, imgUrl);
+    })
+      .then(response => response.json())
+      .then((data) => {
+        const photoAdded = data.photoAdded;
+        const { image_id: imageId, description: description, img_url: imgUrl } = photoAdded;
+        props.addPhoto(imageId, description, imgUrl);
       })
       .catch((err) => console.log(err));
   };
 
   return (
-  <React.Fragment>
-    <h2>Add New Photo</h2>
-    <label htmlFor="descriptionInput">
-      Description
-      <input
-        value={description}
-        onChange={event => setDescription(event.target.value)}
-        id="descriptionInput"
-        style={{marginLeft: '5px'}}
-      />
-    </label>
-    <label htmlFor="photoUpload" style={{marginLeft: '10px', marginRight: '5px'}}>
+    <React.Fragment>
+      <h2>Add New Photo</h2>
+      <label htmlFor="descriptionInput">
+        Description
+        <input
+          value={description}
+          onChange={event => setDescription(event.target.value)}
+          id="descriptionInput"
+          style={{ marginLeft: '5px' }}
+        />
+      </label>
+      <label htmlFor="photoUpload" style={{ marginLeft: '10px', marginRight: '5px' }}>
         <input type="file" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
       </label>
-    <button type="button" style={{marginLeft: '10px'}} onClick={addNewPhoto} >
-      Add Photo!
-    </button>
-    <img src={imgUrl} />
-  </React.Fragment>
-);
+      <button type="button" style={{ marginLeft: '10px' }} onClick={addNewPhoto} >
+        Add Photo!
+      </button>
+    </React.Fragment>
+  );
 }
 
 function AllPhotosContainer() {
   const [photos, setPhotos] = React.useState([]);
 
-  function addPhoto(imageId, description, imgUrl) {
-    const newPhoto = {imageId, description, imgUrl};
-    const currentPhotos = [...photos];
-    setPhotos([...currentPhotos, newPhoto]);
+  function getPhotos() {
+    fetch('/photos.json')
+      .then((response) => response.json())
+      .then((data) => setPhotos(data.images))
+  }
+
+  function addPhoto() {
+    getPhotos();
   }
 
   React.useEffect(() => {
-    fetch('/photos.json')
-    .then((response) => response.json())
-    .then((data) => setPhotos(data.images))
+    getPhotos()
   }, [])
 
   const all_photos = [];
