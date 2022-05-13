@@ -3,7 +3,6 @@ function App() {
     <React.Fragment>
       <Header />
       <UserProfile />
-      <AddImage />
       <AllPhotosContainer />
       <AllUsersContainer />
       {/* <AdoptCatNearMe /> */}
