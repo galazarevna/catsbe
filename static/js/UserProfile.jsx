@@ -5,7 +5,7 @@ function UserProfile() {
     const [image_file, setImageFile] = React.useState("");
     const [city, setCity] = React.useState("");
     const [file, setFile] = React.useState("");
-    const [uploadStatus, setUploadStatus] = React.useState("");
+    const [uploadStatus, setUploadStatus] = React.useState(false);
     const [button, setButton] = React.useState(false);
 
 
@@ -36,7 +36,7 @@ function UserProfile() {
                 setImageFile(data.url);
             })
             .catch((err) => console.log(err));
-        setUploadStatus("Photo updated!")
+        setUploadStatus(true)
     };
 
 
@@ -51,7 +51,7 @@ function UserProfile() {
             setImageFile(result)
         }
         reader.readAsDataURL(chosenFile);
-        setUploadStatus("")
+        setUploadStatus(false)
         setButton(true)
     }
 
@@ -62,7 +62,7 @@ function UserProfile() {
                 <img className="profile-img" src={image_file} alt="profile picture" />
             </label>
             {button ? <button onClick={uploadNewPhoto}>Apply changes</button> : ""}
-            <p>{uploadStatus}</p>
+            {uploadStatus ? <p>Photo updated!</p>: ""}
             <p>About me: {about_me}</p>
             <p>From: <a href={location}> {city}</a></p>
         </div>
