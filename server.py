@@ -1,4 +1,5 @@
 """Server for catsbe app."""
+import html
 import json
 import os
 from datetime import datetime
@@ -237,10 +238,10 @@ def cats():
             cats_dict["color"] = cat["colors"]["primary"]
             cats_dict["gender"] = cat["gender"]
             cats_dict["age"] = cat["age"]
-            cats_dict["description"] = cat["description"]
+            # converting HTML character references to the corresponding Unicode characters
+            description = html.unescape(cat["description"])
+            cats_dict["description"] = description
             cats_dict["img"] = cat["primary_photo_cropped"]["small"]
-            if "&amp;#39;" in cat["description"]:
-                cats_dict["description"] = cat["description"].replace("&amp;#39;", "'")
         except (KeyError, TypeError) as e:
             print(e)
         finally:
