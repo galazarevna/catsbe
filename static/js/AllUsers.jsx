@@ -15,8 +15,8 @@ function AllUsersContainer() {
 
   React.useEffect(() => {
     fetch('/users.json')
-    .then((response) => response.json())
-    .then((data) => setUsers(data.users))
+      .then((response) => response.json())
+      .then((data) => setUsers(data.users))
   }, [])
 
   const all_users = [];
@@ -43,7 +43,7 @@ function AllUsersContainer() {
 }
 
 function AllUsersOnMap() {
-   return (
+  return (
     <React.Fragment>
       <Header />
       <AllUsersContainer />

@@ -10,7 +10,7 @@ function Photo(props) {
 function AddPhoto(props) {
   const [description, setDescription] = React.useState("");
   const [image, setImage] = React.useState("");
-  function addNewPhoto() {
+  function uploadNewPhoto() {
     const data = new FormData();
     data.append("file", image);
     data.append("description", description);
@@ -42,7 +42,7 @@ function AddPhoto(props) {
       <label htmlFor="photoUpload" style={{ marginLeft: '10px', marginRight: '5px' }}>
         <input type="file" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
       </label>
-      <button type="button" style={{ marginLeft: '10px' }} onClick={addNewPhoto} >
+      <button type="button" style={{ marginLeft: '10px' }} onClick={uploadNewPhoto} >
         Add Photo!
       </button>
     </React.Fragment>
