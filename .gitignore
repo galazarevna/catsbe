@@ -133,8 +133,3 @@ dmypy.json
 
 # Test file for debugging
 test.py
-
-# File with Google API KEY
-templates/all_users_on_map.html
-
-
