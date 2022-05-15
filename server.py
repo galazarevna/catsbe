@@ -42,16 +42,6 @@ def homepage():
     return render_template("homepage.html")
 
 
-@app.route("/all_users_on_map")
-def all_users_on_map():
-    """View all users nearby on Google maps."""
-
-    if "user_id" in session:
-        user_id = session["user_id"]
-        current_user = User.get_by_id(user_id)
-        return render_template("all_users_on_map.html", user=current_user)
-
-
 def validate_image(filename):  # path to file
     kind = filetype.guess(filename)
     if kind is None:

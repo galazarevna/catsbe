@@ -2,13 +2,21 @@
 
 {% block title %}{{ user.username }} • Catsbe{% endblock %}
 
+{% block head %}
+<link href="/static/css/maps.css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
 <h1>{{ user.username }}</h1>
-<div id="container"></div>
+<div id="root"></div>
+
+
+<!-- <div id="container"></div> -->
 
 {% endblock %}
 
 {% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.3.1/react-router-dom.js"></script>
 <script src="/static/js/Header.jsx" type="text/jsx"></script>
 <script src="/static/js/Footer.jsx" type="text/jsx"></script>
 <script src="/static/js/UserProfile.jsx" type="text/jsx"></script>
@@ -16,4 +24,6 @@
 <script src="/static/js/AllUsers.jsx" type="text/jsx"></script>
 <script src="/static/js/AdoptCatNearMe.jsx" type="text/jsx"></script>
 <script src="/static/js/App.jsx" type="text/jsx"></script>
+<script src="/static/js/GoogleMaps.jsx" type="text/jsx"></script>
+<script src="/static/js/Root.jsx" type="text/jsx"></script>
 {% endblock %}

@@ -66,20 +66,20 @@ function initMap() {
 function GoogleMaps() {
 
     React.useEffect(() => {
+        const div = document.createElement("div");
+        div.id = "map";
+        document.body.appendChild(div);
         const script = document.createElement("script");
         const API = "";
         script.src = `https://maps.googleapis.com/maps/api/js?key=${API}&callback=initMap`;
         script.async = true;
+        script.id = "google-map";
         document.body.appendChild(script);
     });
 
     return (
         <div>
-            <div id="map" style={{ width: 100, height: 100 }}></div>
+            Explore users nearby!
         </div>
     )
-
-
 }
-
-ReactDOM.render(<GoogleMaps />, document.querySelector('#map'));
