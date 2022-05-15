@@ -23,6 +23,8 @@ class User(db.Model):
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     zip_code = db.Column(db.Integer, nullable=False)
     image_file = db.Column(db.String(100), nullable=False, default="static/img/default.jpg")
+    lat = db.Column(db.Float, nullable=True)
+    lng = db.Column(db.Float, nullable=True)
 
     sent_messages = db.relationship("Message", foreign_keys='[Message.sender_id]',
                                     back_populates="sender",
@@ -44,12 +46,12 @@ class User(db.Model):
 
     @classmethod
     def create(cls, username, email, password, confirmed, about_me, breed, status, last_seen,
-               zip_code):
+               zip_code, lat, lng):
         """Create and return a new user."""
 
         return cls(username=username, email=email, password=password, confirmed=confirmed,
                    about_me=about_me, breed=breed, status=status, last_seen=last_seen,
-                   zip_code=zip_code)
+                   zip_code=zip_code, lat=lat, lng=lng)
 
     @classmethod
     def get_by_id(cls, user_id):

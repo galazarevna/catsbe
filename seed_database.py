@@ -20,7 +20,7 @@ with open("data/users.json") as f:
     # Create users, store them in a list
     users_in_db = []
     for user in user_data:
-        username, email, password, confirmed, about_me, breed, status, zip_code = (
+        username, email, password, confirmed, about_me, breed, status, zip_code, lat, lng = (
             user["username"],
             user["email"],
             user["password"],
@@ -28,13 +28,15 @@ with open("data/users.json") as f:
             user["about_me"],
             user["breed"],
             user["status"],
-            user["zip_code"]
+            user["zip_code"],
+            user["lat"],
+            user["lng"]
         )
 
         last_seen = datetime.strptime(user["last_seen"], "%Y-%m-%d")
 
         db_user = model.User.create(username, email, password, confirmed, about_me, breed, status,
-                                    last_seen, zip_code)
+                                    last_seen, zip_code, lat, lng)
 
         users_in_db.append(db_user)
 

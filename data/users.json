@@ -5,10 +5,12 @@
     "password": "Gelios_pwd",
     "confirmed": true,
     "about_me": "Sun 24/7",
-    "breed": "Russian Ginger",
+    "breed": "Tabby Ginger",
     "status": "Happy!",
     "last_seen": "2021-05-15",
-    "zip_code": "94070"
+    "zip_code": "94070",
+    "lat": "37.4975165",
+    "lng": "-122.2710602"
   },
   {
     "username": "fatvilly",
@@ -19,7 +21,9 @@
     "breed": "Mixin",
     "status": "Feeling crazy!",
     "last_seen": "2021-07-30",
-    "zip_code": "94060"
+    "zip_code": "94060",
+    "lat": "37.2051162",
+    "lng": "-122.3334258"
   },
   {
     "username": "imblackmax",
@@ -30,7 +34,9 @@
     "breed": "Bombay",
     "status": "On a raw diet",
     "last_seen": "2022-04-03",
-    "zip_code": "94071"
+    "zip_code": "94039",
+    "lat": "37.39",
+    "lng": "-122.08"
   },
   {
     "username": "thecatbkk",
@@ -41,7 +47,9 @@
     "breed": "Persian",
     "status": "",
     "last_seen": "2022-04-15",
-    "zip_code": "94064"
+    "zip_code": "94064",
+    "lat": "37.48999999999999",
+    "lng": "-122.23"
   },
   {
     "username": "bengal_boeing",
@@ -52,7 +60,9 @@
     "breed": "Bengal",
     "status": "Bored",
     "last_seen": "2022-05-04",
-    "zip_code": "94095"
+    "zip_code": "94095",
+    "lat": "48.5236242",
+    "lng": "38.5785068"
   },
   {
     "username": "luckys_olaff",
@@ -63,7 +73,9 @@
     "breed": "Ragdoll",
     "status": "Open for mating",
     "last_seen": "2022-01-24",
-    "zip_code": "95050"
+    "zip_code": "95050",
+    "lat": "37.3539663",
+    "lng": "-121.9529992"
   },
   {
     "username": "_phill_bengal",
@@ -74,7 +86,9 @@
     "breed": "",
     "status": "",
     "last_seen": "2022-02-05",
-    "zip_code": "98076"
+    "zip_code": "98076",
+    "lat": "38.0401499",
+    "lng": "14.6412925"
   },
   {
     "username": "KoshMars",
@@ -85,6 +99,8 @@
     "breed": "Oriental",
     "status": "Watching movies",
     "last_seen": "2022-02-27",
-    "zip_code": "63099"
+    "zip_code": "63099",
+    "lat": "38.5424489",
+    "lng": "-90.4721785"
   }
 ]
