@@ -6,22 +6,21 @@ function Header() {
 
     React.useEffect(() => {
         fetch("/user.json")
-        .then(response => response.json())
-        .then((result) => {
-            console.log(result);
-            setUsername(result.username);
-            setStatus(result.status);
-            setLastSeen(result.last_seen);
-        });
-      }, []);
+            .then(response => response.json())
+            .then((result) => {
+                setUsername(result.username);
+                setStatus(result.status);
+                setLastSeen(result.last_seen);
+            });
+    }, []);
 
     return (
         <header className="page-header">
             <h1>Hi {username}!</h1>
-        <main>
-            <p>Last seen: {last_seen}</p>
-            <p>Status: {status}</p>
-        </main>
+            <main>
+                <p>Last seen: {last_seen}</p>
+                <p>Status: {status}</p>
+            </main>
         </header>
     );
 }

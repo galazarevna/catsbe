@@ -69,7 +69,6 @@ function AllPhotosContainer() {
   const all_photos = [];
 
   for (const photo of photos) {
-    console.log(photo);
     all_photos.push(
       <Photo
         description={photo.description}

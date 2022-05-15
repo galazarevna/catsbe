@@ -13,7 +13,6 @@ function UserProfile() {
         fetch("/user.json")
             .then(response => response.json())
             .then((result) => {
-                console.log(result);
                 setZipCode(result.zip_code);
                 setAboutMe(result.about_me);
                 setImageFile(result.image_file);
@@ -62,7 +61,7 @@ function UserProfile() {
                 <img className="profile-img" src={image_file} alt="profile picture" />
             </label>
             {button ? <button onClick={uploadNewPhoto}>Apply changes</button> : ""}
-            {uploadStatus ? <p>Photo updated!</p>: ""}
+            {uploadStatus ? <p>Photo updated!</p> : ""}
             <p>About me: {about_me}</p>
             <p>From: <a href={location}> {city}</a></p>
         </div>
