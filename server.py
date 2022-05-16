@@ -178,14 +178,14 @@ def current_user():
         return user_as_dict
 
 
-# @app.route("/user.json")
-# def user():
-#     if "user_id" in session:
-#         user_id = session["user_id"]
-#         current_user = User.get_by_id(user_id)
-#         user_as_dict = current_user.as_dict()
-#         # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
-#         return user_as_dict
+@app.route("/user.json", methods=["POST"])
+def user():
+    user_id = request.form.get("user_id")
+    print("user_id=", user_id)
+    user_to_follow = User.get_by_id(user_id)
+    user_as_dict = user_to_follow.as_dict()
+    # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
+    return user_as_dict
 
 
 @app.route("/users.json")
@@ -264,6 +264,11 @@ def cats():
             cats_dict["img"] = cats_dict.get("img", "/static/img/default.jpg")
             cats_list.append(cats_dict)
     return jsonify({"cats": cats_list})
+
+
+# @app.route("/update-status")
+# def update_status():
+#
 
 
 

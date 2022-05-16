@@ -2,18 +2,13 @@ const Router = ReactRouterDOM.BrowserRouter;
 const { Link, Switch, Route } = ReactRouterDOM;
 
 function UserToFollow(props) {
+
   return (
     <div className="user">
       <Link
-        key={props.userId}
-        to={{ pathname: `/user/${props.userId}` }}
+        // to={`/user/${props.userId}`}
+        to={`/${props.userId}`}
       >{props.username}</Link>
-      {/* <Link to="/user">{props.username}</Link> */}
-      {/* <Switch>
-        <Route path={{ pathname: `/user/${props.userId}` }} >
-          <FollowProfile />
-        </Route>
-      </Switch> */}
       <h2>Name: {props.username} </h2>
       <button type="button" style={{ marginLeft: '10px' }} >
         {/* <button type="button" style={{ marginLeft: '10px' }} onClick={followUser} > */}
@@ -23,6 +18,8 @@ function UserToFollow(props) {
     </div>
   );
 }
+
+
 
 function UsersToFollowContainer() {
   const [users, setUsers] = React.useState([]);

@@ -18,6 +18,14 @@ function Header() {
     const handleStatus = (e) => {
         setStatus(e.target.value);
         setDisplay("none");
+        // fetch('/update-status', {
+        //     method: "POST", PUT?
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({"status": status})
+        // })
+        //     .catch((err) => console.log(err));
         // update status in DB!
     };
 

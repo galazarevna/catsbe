@@ -3,13 +3,11 @@ function App() {
     try {
       const script = document.querySelector("#google-map");
       document.body.removeChild(script);
-    } catch (error) {
-      console.error(error);};
+    } catch (error) {};
     try {
       const el = document.querySelector("#map");
       document.body.removeChild(el);
-    } catch (error) {
-      console.error(error);};
+    } catch (error) {};
   });
 
   return (
