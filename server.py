@@ -37,8 +37,8 @@ def homepage():
 
     if "user_id" in session:
         user_id = session["user_id"]
-        current_user = User.get_by_id(user_id)
-        return render_template("profile_page.html", user=current_user)
+        curr_user = User.get_by_id(user_id)
+        return render_template("profile_page.html", user=curr_user)
     return render_template("homepage.html")
 
 

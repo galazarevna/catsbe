@@ -6,7 +6,7 @@ function FollowProfile() {
     const [city, setCity] = React.useState("");
 
     React.useEffect(() => {
-        fetch("/current-user.json")
+        fetch("/user.json")
             .then(response => response.json())
             .then((result) => {
                 setZipCode(result.zip_code);
