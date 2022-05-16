@@ -3,6 +3,7 @@
 from datetime import datetime
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql.expression import func
 
 db = SQLAlchemy()
 
@@ -74,6 +75,12 @@ class User(db.Model):
         user = cls.query.get(user_id)
         user.image_file = img_url
         db.session.commit()
+
+    @classmethod
+    def get_users_to_follow(cls, user_id, num_of_users):
+        """Gets random users except the current one"""
+
+        return cls.query.filter(User.user_id != user_id).order_by(func.random()).limit(num_of_users).all()
 
 
 class Message(db.Model):

@@ -1,6 +1,6 @@
 function initMap() {
 
-    fetch("/user.json")
+    fetch("/current-user.json")
         .then((response) => response.json())
         .then((currentUser) => {
             const userCoords = { lat: currentUser.lat, lng: currentUser.lng };

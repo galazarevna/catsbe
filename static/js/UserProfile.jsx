@@ -10,7 +10,7 @@ function UserProfile() {
 
 
     React.useEffect(() => {
-        fetch("/user.json")
+        fetch("/current-user.json")
             .then(response => response.json())
             .then((result) => {
                 setZipCode(result.zip_code);

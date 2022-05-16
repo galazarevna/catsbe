@@ -2,7 +2,7 @@ function User(props) {
   return (
     <div className="user">
       <h2>Name: {props.username}</h2>
-      <img src="/static/img/default.jpg" alt="profile" />
+      <img src={props.imgUrl} alt="profile" />
       <h2>About me: {props.about_me}</h2>
       <h2>From: {props.zip_code}</h2>
       <h2>Last seen: {props.last_seen}</h2>
@@ -28,7 +28,7 @@ function AllUsersContainer() {
         about_me={user.about_me}
         zip_code={user.zip_code}
         last_seen={user.last_seen}
-        imgUrl="/static/img/default.jpg"
+        imgUrl={user.image_file}
         key={user.user_id}
       />,
     );

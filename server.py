@@ -168,14 +168,24 @@ def get_city(zip_code):
     return city
 
 
-@app.route("/user.json")
-def user():
+@app.route("/current-user.json")
+def current_user():
     if "user_id" in session:
         user_id = session["user_id"]
-        current_user = User.get_by_id(user_id)
-        user_as_dict = current_user.as_dict()
+        curr_user = User.get_by_id(user_id)
+        user_as_dict = curr_user.as_dict()
         # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
         return user_as_dict
+
+
+# @app.route("/user.json")
+# def user():
+#     if "user_id" in session:
+#         user_id = session["user_id"]
+#         current_user = User.get_by_id(user_id)
+#         user_as_dict = current_user.as_dict()
+#         # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
+#         return user_as_dict
 
 
 @app.route("/users.json")
@@ -184,6 +194,19 @@ def users():
     users_list = []
     for user_obj in all_users:
         users_list.append(user_obj.as_dict())
+    return jsonify({"users": users_list})
+
+
+@app.route("/random-users.json")
+def random_users():
+    """Takes all users (except current) from the DB and returns 2 random users to follow"""
+
+    users_list = []
+    if "user_id" in session:
+        user_id = session["user_id"]
+        rand_users = User.get_users_to_follow(user_id, 2)
+        for user_obj in rand_users:
+            users_list.append(user_obj.as_dict())
     return jsonify({"users": users_list})
 
 

@@ -5,7 +5,7 @@ function Header() {
     const [last_seen, setLastSeen] = React.useState("");
 
     React.useEffect(() => {
-        fetch("/user.json")
+        fetch("/current-user.json")
             .then(response => response.json())
             .then((result) => {
                 setUsername(result.username);
