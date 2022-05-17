@@ -263,7 +263,7 @@ def cats():
         except (KeyError, TypeError) as e:
             print(e)
         finally:
-            cats_dict["img"] = cats_dict.get("img", "/static/img/default.jpg")
+            cats_dict["img"] = cats_dict.get("img", "/static/img/adopt_default.jpg")
             cats_list.append(cats_dict)
     return jsonify({"cats": cats_list})
 
