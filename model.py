@@ -80,7 +80,16 @@ class User(db.Model):
     def get_users_to_follow(cls, user_id, num_of_users):
         """Gets random users except the current one"""
 
-        return cls.query.filter(User.user_id != user_id).order_by(func.random()).limit(num_of_users).all()
+        return cls.query.filter(User.user_id != user_id).order_by(func.random()).limit(
+            num_of_users).all()
+
+    @classmethod
+    def update_user_status(cls, user_id, new_status):
+        """Updates user's status"""
+
+        user = cls.query.get(user_id)
+        user.status = new_status
+        db.session.commit()
 
 
 class Message(db.Model):
@@ -125,7 +134,8 @@ class Image(db.Model):
     def create(cls, description, img_url, date_uploaded, user_id):
         """Create and return a new image."""
 
-        return cls(description=description, img_url=img_url, date_uploaded=date_uploaded, user_id=user_id)
+        return cls(description=description, img_url=img_url, date_uploaded=date_uploaded,
+                   user_id=user_id)
 
     @classmethod
     def all_images(cls):

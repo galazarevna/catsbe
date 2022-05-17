@@ -7,30 +7,20 @@
 <h2>Log In</h2>
 <form action="/login" method="POST">
     <p>
-        Username <input name="username" type="text">
+        <input name="username" type="text" placeholder="Email">
     </p>
 
     <p>
-        Password <input name="password" type="password">
+        <input name="password" type="password" placeholder="Password">
     </p>
 
     <p>
-        <input type="submit">
+        <input value="Log In" type="submit">
     </p>
 </form>
 
-<h2>Create an Account</h2>
-<form action="/users" method="POST">
     <p>
-        Email <input name="email" type="text">
+        Don't have an account? <a href="">Sign up</a>
     </p>
 
-    <p>
-        Password <input name="password" type="password">
-    </p>
-
-    <p>
-        <input type="submit">
-    </p>
-</form>
 {% endblock %}

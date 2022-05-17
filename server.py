@@ -130,7 +130,8 @@ def add_photo():
             path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
             uploaded_file.save(path)
 
-        image = Image.create(description=description, img_url=path, date_uploaded=date_uploaded, user_id=user_id)
+        image = Image.create(description=description, img_url=path, date_uploaded=date_uploaded,
+                             user_id=user_id)
         model.db.session.add(image)
         model.db.session.commit()
         new_photo = image.as_dict()
@@ -219,8 +220,8 @@ def cats():
     user_zip_code = None
     if "user_id" in session:
         user_id = session["user_id"]
-        current_user = User.get_by_id(user_id)
-        user_zip_code = current_user.zip_code
+        curr_user = User.get_by_id(user_id)
+        user_zip_code = curr_user.zip_code
         print("user_zip_code=", user_zip_code)
 
     def get_cats():
@@ -248,7 +249,8 @@ def cats():
     for cat in cats_petfinder["animals"]:
         cats_dict = {}
         try:
-            cats_dict["name"] = cat["name"]
+            name = html.unescape(cat["name"])
+            cats_dict["name"] = name
             cats_dict["url"] = cat["url"]
             cats_dict["city"] = cat["contact"]["address"]["city"]
             cats_dict["color"] = cat["colors"]["primary"]
@@ -266,10 +268,15 @@ def cats():
     return jsonify({"cats": cats_list})
 
 
-# @app.route("/update-status")
-# def update_status():
-#
+@app.route("/update-status", methods=["POST"])
+def update_status():
+    """Updates user's status in DB"""
 
+    status = request.form.get("status")
+    if "user_id" in session:
+        user_id = session["user_id"]
+        User.update_user_status(user_id, status)
+    return "success"
 
 
 if __name__ == "__main__":
