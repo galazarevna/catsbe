@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Catsbe{% endblock %}
+
+{% block body %}
+<h1>Welcome furrends!</h1>
+
+<h2>Log In</h2>
+<form action="/login" method="POST">
+    <p>
+        <input name="username" type="text" placeholder="Username">
+    </p>
+
+    <p>
+        <input name="password" type="password" placeholder="Password">
+    </p>
+
+    <p>
+        <input value="Log In" type="submit">
+    </p>
+</form>
+
+    <p>
+        Don't have an account? <a href="">Sign up</a>
+    </p>
+
+{% endblock %}

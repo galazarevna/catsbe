@@ -1,26 +1,36 @@
 {% extends 'base.html' %}
-{% block title %}Catsbe{% endblock %}
+
+{% block title %}{{ user.username }} • Catsbe{% endblock %}
+
+{% block head %}
+<link href="/static/css/maps.css" rel="stylesheet" />
+{% endblock %}
 
 {% block body %}
-<h1>Welcome furrends!</h1>
+<h1>{{ user.username }}</h1>
+<div id="root"></div>
 
-<h2>Log In</h2>
-<form action="/login" method="POST">
-    <p>
-        <input name="username" type="text" placeholder="Username">
-    </p>
 
-    <p>
-        <input name="password" type="password" placeholder="Password">
-    </p>
+<!-- <div id="container"></div> -->
 
-    <p>
-        <input value="Log In" type="submit">
-    </p>
-</form>
+{% endblock %}
 
-    <p>
-        Don't have an account? <a href="">Sign up</a>
-    </p>
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.3.1/react-router-dom.js"></script>
 
+<script src="/static/js/Header.jsx" type="text/jsx"></script>
+<script src="/static/js/Footer.jsx" type="text/jsx"></script>
+<script src="/static/js/UserProfile.jsx" type="text/jsx"></script>
+<script src="/static/js/AllPhotos.jsx" type="text/jsx"></script>
+<script src="/static/js/AllUsers.jsx" type="text/jsx"></script>
+<script src="/static/js/UsersToFollow.jsx" type="text/jsx"></script>
+<script src="/static/js/AdoptCatNearMe.jsx" type="text/jsx"></script>
+<script src="/static/js/App.jsx" type="text/jsx"></script>
+
+<script src="/static/js/GoogleMaps.jsx" type="text/jsx"></script>
+
+<script src="/static/js/FollowersPhotos.jsx" type="text/jsx"></script>
+<script src="/static/js/FollowProfile.jsx" type="text/jsx"></script>
+
+<script src="/static/js/Root.jsx" type="text/jsx"></script>
 {% endblock %}
