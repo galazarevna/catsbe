@@ -3,14 +3,14 @@ function Cat(props) {
     <div className="cat">
       <h2>Name: {props.name}</h2>
       <h3 dangerouslySetInnerHTML={ {__html: props.description } }></h3>
-      <h3>{props.gender}, {props.age}, {props.color}</h3>
+      <h3>{props.gender} {props.age} {props.color}</h3>
       <h3>City: {props.city}</h3>
       <a href={props.url}><img src={props.img} alt="cat's image" /></a>
     </div>
   );
 }
 
-function AdoptCatNearMe(props) {
+function AdoptCatNearMe() {
   const [cats, setCats] = React.useState([]);
 
   React.useEffect(() => {

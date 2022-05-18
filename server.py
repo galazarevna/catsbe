@@ -225,6 +225,20 @@ def random_users():
     return jsonify({"users": users_list})
 
 
+def beautify_text(text):
+    """Converting HTML character references to the corresponding Unicode characters.
+    Removes any url links from the text.
+    """
+
+    txt = html.unescape(text)
+    words = txt.split()
+    for word in words:
+        if word.startswith("http"):
+            words.remove(word)
+    new_text = " ".join(words)
+    return new_text
+
+
 @app.route("/cats.json")
 def cats():
     """Makes a request to Petfinder's API to retrieve 3 cats available for adoption in 20 miles
@@ -270,9 +284,7 @@ def cats():
             cats_dict["color"] = cat["colors"]["primary"]
             cats_dict["gender"] = cat["gender"]
             cats_dict["age"] = cat["age"]
-            # converting HTML character references to the corresponding Unicode characters
-            description = html.unescape(cat["description"])
-            cats_dict["description"] = description
+            cats_dict["description"] = beautify_text(cat["description"])
             cats_dict["img"] = cat["primary_photo_cropped"]["small"]
         except (KeyError, TypeError) as e:
             print(e)
