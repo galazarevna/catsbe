@@ -40,7 +40,7 @@ function AddPhoto(props) {
         />
       </label>
       <label htmlFor="photoUpload" style={{ marginLeft: '10px', marginRight: '5px' }}>
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
+        <input type="file" accept="image/jpeg" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
       </label>
       <button type="button" style={{ marginLeft: '10px' }} onClick={uploadNewPhoto} >
         Add Photo!

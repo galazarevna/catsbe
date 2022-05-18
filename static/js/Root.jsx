@@ -22,8 +22,11 @@ function Root() {
             <GoogleMaps />
           </Route>
           <Route path="/:userId">
-          {/* <Route path="/user/:userId"> */}
+            {/* <Route path="/user/:userId"> */}
+            <Header />
             <FollowProfile />
+            <FollowersPhotosContainer />
+            <Footer />
           </Route>
         </Switch>
       </div>

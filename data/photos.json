@@ -22,5 +22,23 @@
     "img_url": "static/uploads/enjoy_your_meal.jpeg",
     "date_uploaded": "2021-05-15",
     "user_id": "1"
+  },
+  {
+    "description": "Got a letter from my best friend from Siberia",
+    "img_url": "static/uploads/koshmars_letter.jpeg",
+    "date_uploaded": "2022-05-15",
+    "user_id": "8"
+  },
+  {
+    "description": "Flying to the moon and back...",
+    "img_url": "static/uploads/koshmars_moscow.jpeg",
+    "date_uploaded": "2022-04-25",
+    "user_id": "8"
+  },
+  {
+    "description": "Happy Thanksgiving!",
+    "img_url": "static/uploads/koshmars_pumpkin.jpeg",
+    "date_uploaded": "2022-02-15",
+    "user_id": "8"
   }
 ]

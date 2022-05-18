@@ -20,7 +20,7 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024
-app.config["UPLOAD_EXTENSIONS"] = [".jpg", ".png", ".gif"]
+app.config["UPLOAD_EXTENSIONS"] = [".jpg", ".jpeg", ".png", ".gif"]
 app.config["UPLOAD_PATH"] = "static/uploads"
 load_dotenv()
 
@@ -49,8 +49,7 @@ def validate_image(filename):  # path to file
         return None
     print(f"File extension: {kind.extension}")
     print(f"File MIME type: {kind.mime}")
-
-    return f".{kind.extension}"
+    return f".{kind.extension if kind.mime != 'image/jpeg' else 'jpeg'}"
 
 
 @app.errorhandler(413)
@@ -90,7 +89,7 @@ def upload_file():
 
 @app.route("/photos.json")
 def all_photos():
-    """View all photos owned by user."""
+    """View all photos owned by logged-in user."""
     images_list = []
     print("images_list =", images_list)
     if "user_id" in session:
@@ -98,6 +97,21 @@ def all_photos():
         images = Image.get_images_by_user_id(user_id)
         for img_obj in images:
             images_list.append(img_obj.as_dict())
+    return jsonify({"images": images_list})
+
+
+@app.route("/followers_photos.json", methods=["POST"])
+def followers_photos():
+    """View all photos owned by user."""
+
+    images_list = []
+    print("images_list =", images_list)
+    user_id = request.form.get("user_id")
+    print("user_id=", user_id)
+
+    images = Image.get_images_by_user_id(user_id)
+    for img_obj in images:
+        images_list.append(img_obj.as_dict())
     return jsonify({"images": images_list})
 
 
