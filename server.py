@@ -87,9 +87,23 @@ def upload_file():
     return {"url": f"{path}"}
 
 
+# @app.route("/photos.json")
+# def all_photos():
+#     """View all photos owned by logged-in user."""
+#     images_list = []
+#     print("images_list =", images_list)
+#     if "user_id" in session:
+#         user_id = session["user_id"]
+#         images = Image.get_images_by_user_id(user_id)
+#         for img_obj in images:
+#             images_list.append(img_obj.as_dict())
+#     return jsonify({"images": images_list})
+
+
 @app.route("/photos.json")
 def all_photos():
-    """View all photos owned by logged-in user."""
+    """View all photos with related info (likes) owned by logged-in user."""
+
     images_list = []
     print("images_list =", images_list)
     if "user_id" in session:

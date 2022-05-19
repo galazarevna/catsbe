@@ -64,3 +64,23 @@ with open("data/photos.json") as f:
 
     model.db.session.add_all(photos_in_db)
     model.db.session.commit()
+
+# Load photo data from JSON file
+with open("data/likes.json") as f:
+    like_data = json.loads(f.read())
+
+    # Create likes, store them in a list
+    likes_in_db = []
+    for like in like_data:
+        user_id, image_id, comment_id = (
+            like["user_id"],
+            like["image_id"],
+            like["comment_id"]
+        )
+
+        db_like = model.Like.create(user_id, image_id, comment_id)
+
+        likes_in_db.append(db_like)
+
+    model.db.session.add_all(likes_in_db)
+    model.db.session.commit()

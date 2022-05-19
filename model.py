@@ -173,11 +173,9 @@ class Like(db.Model):
     __tablename__ = "likes"
 
     like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    like_type = db.Column(db.String, nullable=False)
-
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    image_id = db.Column(db.Integer, db.ForeignKey("images.image_id"))
-    comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"))
+    image_id = db.Column(db.Integer, db.ForeignKey("images.image_id"), nullable=True)
+    comment_id = db.Column(db.Integer, db.ForeignKey("comments.comment_id"), nullable=True)
 
     user = db.relationship("User", backref="likes")
     image = db.relationship("Image", backref="likes")
@@ -185,6 +183,12 @@ class Like(db.Model):
 
     def __repr__(self):
         return f"<Like like_id={self.like_id} like_type={self.like_type}>"
+
+    @classmethod
+    def create(cls, user_id, image_id, comment_id):
+        """Create and return a new like."""
+
+        return cls(user_id=user_id, image_id=image_id, comment_id=comment_id)
 
 
 class Follower(db.Model):
