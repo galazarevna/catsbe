@@ -145,8 +145,15 @@ class Image(db.Model):
 
     @classmethod
     def get_images_by_user_id(cls, user_id):
-        """Return an image by primary key."""
+        """Return images owned by user."""
+
         return cls.query.filter_by(user_id=user_id).all()
+
+    @classmethod
+    def get_images_with_likes_by_user_id(cls, user_id):
+        """Return images with likes owned by user."""
+
+        return cls.query.join(Like, isouter=True).filter(Image.user_id == user_id).all()
 
 
 class Comment(db.Model):
@@ -182,13 +189,32 @@ class Like(db.Model):
     comment = db.relationship("Comment", backref="likes")
 
     def __repr__(self):
-        return f"<Like like_id={self.like_id} like_type={self.like_type}>"
+        return f"<Like like_id={self.like_id}>"
 
     @classmethod
     def create(cls, user_id, image_id, comment_id):
         """Create and return a new like."""
 
         return cls(user_id=user_id, image_id=image_id, comment_id=comment_id)
+
+    @classmethod
+    def get_like_by_user_and_image_id(cls, user_id, image_id):
+        """Gets like by user_id and image_id."""
+
+        return cls.query.filter_by(user_id=user_id, image_id=image_id).first()
+
+    @classmethod
+    def update_like(cls, user_id, image_id):
+        """Checks if the like already exists. If not - add like. If the like exists - delete
+        the record."""
+
+        like = cls.get_like_by_user_and_image_id(user_id, image_id)
+        if like:
+            db.session.delete(like)
+        else:
+            new_like = cls.create(user_id, image_id, comment_id=None)
+            db.session.add(new_like)
+        db.session.commit()
 
 
 class Follower(db.Model):

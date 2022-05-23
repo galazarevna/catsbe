@@ -105,12 +105,19 @@ def all_photos():
     """View all photos with related info (likes) owned by logged-in user."""
 
     images_list = []
-    print("images_list =", images_list)
     if "user_id" in session:
         user_id = session["user_id"]
-        images = Image.get_images_by_user_id(user_id)
+        images = Image.get_images_with_likes_by_user_id(user_id)
         for img_obj in images:
-            images_list.append(img_obj.as_dict())
+            images_dict = img_obj.as_dict()
+            counter = 0
+            for like in img_obj.likes:
+                counter += 1
+                if like.user_id == user_id:
+                    images_dict.update({"active_like": True})
+            images_dict.update({"num_of_likes": f"{counter}"})
+            images_list.append(images_dict)
+    # print({"images": images_list})
     return jsonify({"images": images_list})
 
 
@@ -164,6 +171,16 @@ def add_photo():
         new_photo = image.as_dict()
     print("new_photo=", new_photo)
     return jsonify({"photoAdded": new_photo})
+
+
+@app.route("/update-like", methods=["POST"])
+def update_like():
+    """Update number of likes in DB."""
+
+    data = request.json
+    model.Like.update_like(data["user_id"], data["image_id"])
+    print(data)
+    return ""
 
 
 @app.route("/login", methods=["POST"])

@@ -14,9 +14,10 @@ function App() {
     <React.Fragment>
       <Header />
       <UserProfile />
-      <AllPhotosContainer />
+      <UserPhotosContainer />
+      {/* <AllPhotosContainer /> */}
       <UsersToFollowContainer />
-      <AllUsersContainer />
+      {/* <AllUsersContainer /> */}
       <AdoptCatNearMe />
       <Footer />
     </React.Fragment>
