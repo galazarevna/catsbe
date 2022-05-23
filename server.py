@@ -49,7 +49,7 @@ def validate_image(filename):  # path to file
         return None
     print(f"File extension: {kind.extension}")
     print(f"File MIME type: {kind.mime}")
-    return f".{kind.extension if kind.mime != 'image/jpeg' else 'jpeg'}"
+    return f".{kind.extension}"
 
 
 @app.errorhandler(413)
@@ -77,8 +77,8 @@ def upload_file():
         filename = secure_filename(uploaded_file.filename)
         if filename != "":
             file_ext = os.path.splitext(filename)[1]
-            if file_ext not in app.config["UPLOAD_EXTENSIONS"] or \
-                    file_ext != validate_image(uploaded_file):
+            val_image = validate_image(uploaded_file)
+            if (file_ext or val_image) not in app.config["UPLOAD_EXTENSIONS"]:
                 return "Invalid image", 400
             uploaded_file.seek(0)
             path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
@@ -151,13 +151,12 @@ def add_photo():
         filename = secure_filename(uploaded_file.filename)
         if filename != "":
             file_ext = os.path.splitext(filename)[1]
-            if file_ext not in app.config["UPLOAD_EXTENSIONS"] or \
-                    file_ext != validate_image(uploaded_file):
+            val_image = validate_image(uploaded_file)
+            if (file_ext or val_image) not in app.config["UPLOAD_EXTENSIONS"]:
                 return "Invalid image", 400
             uploaded_file.seek(0)
             path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
             uploaded_file.save(path)
-
         image = Image.create(description=description, img_url=path, date_uploaded=date_uploaded,
                              user_id=user_id)
         model.db.session.add(image)
