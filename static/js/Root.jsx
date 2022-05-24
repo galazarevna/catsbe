@@ -21,8 +21,8 @@ function Root() {
           <Route path="/users-nearby" >
             <GoogleMaps />
           </Route>
-          <Route path="/:userId">
-            {/* <Route path="/user/:userId"> */}
+          <Route path="/:followerId">
+            {/* <Route path="/user/:followerId"> */}
             <Header />
             <FollowProfile />
             <FollowersPhotosContainer />

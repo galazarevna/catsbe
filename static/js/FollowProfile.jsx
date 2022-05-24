@@ -3,7 +3,7 @@ const { useParams } = ReactRouterDOM;
 
 function FollowProfile() {
 
-    let { userId } = useParams();
+    let { followerId } = useParams();
 
     const [about_me, setAboutMe] = React.useState("");
     const [zip_code, setZipCode] = React.useState(0);
@@ -14,7 +14,7 @@ function FollowProfile() {
 
     React.useEffect(() => {
         const data = new FormData();
-        data.append("user_id", userId);
+        data.append("user_id", followerId);
         fetch('/user.json', {
             method: "POST",
             body: data
