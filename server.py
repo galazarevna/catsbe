@@ -113,10 +113,11 @@ def add_photo():
 
 
 @app.route("/photos.json", methods=["GET", "POST"])
-def followers_photos():
+def photos():
     """View all photos with related info (likes) owned by user."""
 
     images_list = []
+    data = {}
     try:
         data = request.get_json(silent=True) or {}
     except Exception as e:
