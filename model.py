@@ -211,10 +211,13 @@ class Like(db.Model):
         like = cls.get_like_by_user_and_image_id(user_id, image_id)
         if like:
             db.session.delete(like)
+            status = "deleted"
         else:
             new_like = cls.create(user_id, image_id, comment_id=None)
             db.session.add(new_like)
+            status = "created"
         db.session.commit()
+        return status
 
 
 class Follower(db.Model):

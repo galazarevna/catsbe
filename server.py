@@ -42,13 +42,15 @@ def homepage():
     return render_template("login_page.html")
 
 
-def validate_image(filename):  # path to file
+def validate_image(filename):
+    """Validates type of given file"""
+
     kind = filetype.guess(filename)
     if kind is None:
         print("Cannot guess file type!")
         return None
-    print(f"File extension: {kind.extension}")
-    print(f"File MIME type: {kind.mime}")
+    print("File extension:", kind.extension)
+    print("File MIME type:", kind.mime)
     return f".{kind.extension}"
 
 
@@ -84,7 +86,7 @@ def upload_file():
             path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
             uploaded_file.save(path)
             User.update_profile_img(user_id, path)
-    return {"url": f"{path}"}
+    return {"url": path}
 
 
 # @app.route("/photos.json")
@@ -115,9 +117,8 @@ def all_photos():
                 counter += 1
                 if like.user_id == user_id:
                     images_dict.update({"active_like": True})
-            images_dict.update({"num_of_likes": f"{counter}"})
+            images_dict.update({"num_of_likes": counter})
             images_list.append(images_dict)
-    # print({"images": images_list})
     return jsonify({"images": images_list})
 
 
@@ -175,12 +176,11 @@ def add_photo():
 
 @app.route("/update-like", methods=["POST"])
 def update_like():
-    """Update number of likes in DB."""
+    """Update like in DB."""
 
     data = request.json
-    model.Like.update_like(data["user_id"], data["image_id"])
-    print(data)
-    return ""
+    status = model.Like.update_like(data["user_id"], data["image_id"])
+    return jsonify({"status": status})
 
 
 @app.route("/login", methods=["POST"])
@@ -285,8 +285,8 @@ def cats():
     def get_cats():
         data = {
             "grant_type": "client_credentials",
-            "client_id": f"{PETFINDER_CLIENT_ID}",
-            "client_secret": f"{PETFINDER_CLIENT_SECRET}"
+            "client_id": PETFINDER_CLIENT_ID,
+            "client_secret": PETFINDER_CLIENT_SECRET
         }
 
         url = "https://api.petfinder.com/v2/oauth2/token"
