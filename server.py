@@ -112,49 +112,32 @@ def add_photo():
     return jsonify({"photoAdded": new_photo})
 
 
-@app.route("/photos.json")
-def all_photos():
-    """View all photos with related info (likes) owned by logged-in user."""
+@app.route("/photos.json", methods=["GET", "POST"])
+def followers_photos():
+    """View all photos with related info (likes) owned by user."""
 
     images_list = []
+    try:
+        data = request.get_json(silent=True) or {}
+    except Exception as e:
+        print(e)
     if "user_id" in session:
-        user_id = session["user_id"]
-        images = Image.get_images_with_likes_by_user_id(user_id)
+        curr_user = session["user_id"]
+        if data:
+            photo_owner = data["user_id"]
+        else:
+            photo_owner = curr_user
+        images = Image.get_images_with_likes_by_user_id(photo_owner)
         for img_obj in images:
             images_dict = img_obj.as_dict()
             counter = 0
             for like in img_obj.likes:
                 counter += 1
-                if like.user_id == user_id:
+                if like.user_id == curr_user:
                     images_dict.update({"active_like": True})
             images_dict.update({"num_of_likes": counter})
+            images_dict.update({"curr_user_id": curr_user})
             images_list.append(images_dict)
-    return jsonify({"images": images_list})
-
-
-@app.route("/followers_photos.json", methods=["POST"])
-def followers_photos():
-    """View all photos owned by user."""
-
-    curr_user = session["user_id"]
-    images_list = []
-    print("images_list =", images_list)
-    data = request.json
-    photo_owner = data["user_id"]
-    print("photo_owner=", photo_owner)
-
-    images = Image.get_images_with_likes_by_user_id(photo_owner)
-    for img_obj in images:
-        images_dict = img_obj.as_dict()
-        counter = 0
-        for like in img_obj.likes:
-            counter += 1
-            if like.user_id == curr_user:
-                images_dict.update({"active_like": True})
-        images_dict.update({"num_of_likes": counter})
-        images_dict.update({"curr_user_id": curr_user})
-        images_list.append(images_dict)
-    print({"images": images_list})
     return jsonify({"images": images_list})
 
 

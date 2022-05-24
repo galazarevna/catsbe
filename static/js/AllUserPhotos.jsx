@@ -95,7 +95,7 @@ function UserPhotosContainer() {
   const [photos, setPhotos] = React.useState([]);
 
   function getPhotos() {
-    fetch('/photos.json')
+    fetch("/photos.json")
       .then((response) => response.json())
       .then((data) => setPhotos(data.images))
   }

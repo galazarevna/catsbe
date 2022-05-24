@@ -8,9 +8,9 @@ function FollowersPhotosContainer() {
 
   React.useEffect(() => {
     const data = JSON.stringify({ "user_id": followerId });
-    fetch("followers_photos.json", {
+    fetch("photos.json", {
       method: "POST",
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       body: data
     })
       .then((response) => response.json())
