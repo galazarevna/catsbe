@@ -26,7 +26,7 @@ function UserProfile() {
     function uploadNewPhoto() {
         const data = new FormData();
         data.append("file", file);
-        fetch("/upload_file", {
+        fetch("/update-profile-photo", {
             method: "POST",
             body: data
         })
@@ -36,6 +36,7 @@ function UserProfile() {
             })
             .catch((err) => console.log(err));
         setUploadStatus(true)
+        setButton(false)
     };
 
 

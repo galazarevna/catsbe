@@ -56,22 +56,21 @@ def validate_image(filename):
 
 @app.errorhandler(413)
 def too_large(e):
+    """Error handler for large files"""
+
     return "File is too large", 413
 
 
-@app.route('/upload_file', methods=['POST'])
 def upload_file():
-    """
+    """Upload file to storage"""
 
-    """
+    uploaded_file = None
     path = None
     if "user_id" in session:
         user_id = session["user_id"]
-        uploaded_file = None
         try:
             uploaded_file = request.files["file"]
             print("uploaded_file=", uploaded_file)
-
         except KeyError as e:
             print(e)
         if not uploaded_file:
@@ -85,8 +84,32 @@ def upload_file():
             uploaded_file.seek(0)
             path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
             uploaded_file.save(path)
-            User.update_profile_img(user_id, path)
-    return {"url": path}
+        return user_id, path
+
+
+@app.route("/update-profile-photo", methods=["POST"])
+def update_profile_photo():
+    """Update current user's profile photo."""
+
+    user_id, path = upload_file()
+    User.update_profile_img(user_id, path)
+    return jsonify({"url": path})
+
+
+@app.route("/add-photo", methods=["POST"])
+def add_photo():
+    """Add a new photo to DB images table."""
+
+    description = request.form.get("description")
+    date_uploaded = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    user_id, path = upload_file()
+
+    image = Image.create(description=description, img_url=path, date_uploaded=date_uploaded,
+                         user_id=user_id)
+    model.db.session.add(image)
+    model.db.session.commit()
+    new_photo = image.as_dict()
+    return jsonify({"photoAdded": new_photo})
 
 
 @app.route("/photos.json")
@@ -133,43 +156,6 @@ def followers_photos():
         images_list.append(images_dict)
     print({"images": images_list})
     return jsonify({"images": images_list})
-
-
-@app.route("/add-photo", methods=["POST"])
-def add_photo():
-    """Add a new photo to DB images table."""
-
-    new_photo = None
-    uploaded_file = None
-    path = None
-    description = request.form.get("description")
-    print("description=", description)
-    date_uploaded = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    if "user_id" in session:
-        user_id = session["user_id"]
-        try:
-            uploaded_file = request.files["file"]
-            print("uploaded_file=", uploaded_file)
-        except KeyError as e:
-            print(e)
-        if not uploaded_file:
-            return "No image provided", 400
-        filename = secure_filename(uploaded_file.filename)
-        if filename != "":
-            file_ext = os.path.splitext(filename)[1]
-            val_image = validate_image(uploaded_file)
-            if (file_ext or val_image) not in app.config["UPLOAD_EXTENSIONS"]:
-                return "Invalid image", 400
-            uploaded_file.seek(0)
-            path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
-            uploaded_file.save(path)
-        image = Image.create(description=description, img_url=path, date_uploaded=date_uploaded,
-                             user_id=user_id)
-        model.db.session.add(image)
-        model.db.session.commit()
-        new_photo = image.as_dict()
-    print("new_photo=", new_photo)
-    return jsonify({"photoAdded": new_photo})
 
 
 @app.route("/update-like", methods=["POST"])
