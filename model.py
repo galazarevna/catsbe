@@ -188,6 +188,8 @@ class Like(db.Model):
     image = db.relationship("Image", backref="likes")
     comment = db.relationship("Comment", backref="likes")
 
+    __table_args__ = (db.Index('image_like_index', "user_id", "image_id", unique=True),)
+
     def __repr__(self):
         return f"<Like like_id={self.like_id}>"
 

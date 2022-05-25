@@ -14,7 +14,7 @@ from requests.auth import HTTPBasicAuth
 from werkzeug.utils import secure_filename
 
 import model
-from model import connect_to_db, User, Image
+from model import connect_to_db, User, Image, Like
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -146,7 +146,7 @@ def photos():
 def update_like():
     """Update like in DB."""
 
-    data = request.json
+    data = request.get_json()
     status = model.Like.update_like(data["user_id"], data["image_id"])
     return jsonify({"status": status})
 
