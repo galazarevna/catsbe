@@ -10,7 +10,6 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect
 from flask import flash, session, jsonify
 from jinja2 import StrictUndefined
-from requests.auth import HTTPBasicAuth
 from werkzeug.utils import secure_filename
 
 import model
@@ -24,11 +23,11 @@ app.config["UPLOAD_EXTENSIONS"] = [".jpg", ".jpeg", ".png", ".gif"]
 app.config["UPLOAD_PATH"] = "static/uploads"
 load_dotenv()
 
-ZIP_CODE_API = os.environ.get('ZIP_CODE_API', None)
-EMAIL = os.environ.get('EMAIL', None)
-PASSWORD = os.environ.get('PASSWORD', None)
-PETFINDER_CLIENT_ID = os.environ.get('PETFINDER_CLIENT_ID', None)
-PETFINDER_CLIENT_SECRET = os.environ.get('PETFINDER_CLIENT_SECRET', None)
+EMAIL = os.environ.get("EMAIL")
+PASSWORD = os.environ.get("PASSWORD")
+PETFINDER_CLIENT_ID = os.environ.get("PETFINDER_CLIENT_ID")
+PETFINDER_CLIENT_SECRET = os.environ.get("PETFINDER_CLIENT_SECRET")
+GOOGLEMAPS_API_KEY = os.environ.get("REACT_APP_GOOGLEMAPS_API_KEY")
 
 
 @app.route("/")
@@ -66,6 +65,7 @@ def upload_file():
 
     uploaded_file = None
     path = None
+    user_id = None
     if "user_id" in session:
         user_id = session["user_id"]
         try:
@@ -84,7 +84,7 @@ def upload_file():
             uploaded_file.seek(0)
             path = os.path.join(app.config["UPLOAD_PATH"], f"{user_id}_{filename}")
             uploaded_file.save(path)
-        return user_id, path
+    return user_id, path
 
 
 @app.route("/update-profile-photo", methods=["POST"])
@@ -155,26 +155,30 @@ def process_login():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    user = User.get_by_username(username)
-    if not user or user.password != password:
+    curr_user = User.get_by_username(username)
+    if not curr_user or curr_user.password != password:
         flash("The email or password you entered was incorrect.")
     else:
         # Log in user by storing the user's username in session
-        session["user_id"] = user.user_id
-        flash(f"Welcome back, {user.username}!")
+        session["user_id"] = curr_user.user_id
+        curr_user.ping()
+        flash(f"Welcome back, {curr_user.username}!")
     return redirect("/")
 
 
 def get_city(zip_code):
-    city_req = requests.get(
-        f"https://service.zipapi.us/zipcode/{zip_code}?X-API-KEY={ZIP_CODE_API}&fields=geolocation,population",
-        auth=HTTPBasicAuth(EMAIL, PASSWORD))
-    response = city_req.json()
+    """Return user location (city) by zipcode."""
+
+    url = f"https://maps.googleapis.com/maps/api/geocode/json?key={GOOGLEMAPS_API_KEY}&components" \
+          f"=postal_code:{zip_code} "
+
+    response = requests.get(url)
+    response = response.json()
     city = zip_code
     try:
-        city = response["data"]["city"]
-    except KeyError as e:
-        print(e)
+        city = response["results"][0]["address_components"][1]["short_name"]
+    except KeyError as error:
+        print(error)
     return city
 
 
@@ -182,13 +186,14 @@ def get_city(zip_code):
 def current_user():
     """Returns logged-in user's info and updates last seen time"""
 
+    user_as_dict = {}
     if "user_id" in session:
         user_id = session["user_id"]
         curr_user = User.get_by_id(user_id)
         curr_user.ping()
         user_as_dict = curr_user.as_dict()
         # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
-        return user_as_dict
+    return user_as_dict
 
 
 @app.route("/user.json", methods=["POST"])
@@ -198,12 +203,13 @@ def user():
     user_id = request.form.get("user_id")
     user_to_follow = User.get_by_id(user_id)
     user_as_dict = user_to_follow.as_dict()
-    # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
     return user_as_dict
 
 
 @app.route("/users.json")
 def users():
+    """Return all users"""
+
     all_users = User.all_users()
     users_list = []
     for user_obj in all_users:
@@ -227,6 +233,11 @@ def random_users():
 def beautify_text(text):
     """Converting HTML character references to the corresponding Unicode characters.
     Removes any url links from the text.
+
+    >>> beautify_text("I&amp;#39;m")
+    'I&#39;m'
+    >>> beautify_text("I&#39;m")
+    "I'm"
     """
 
     txt = html.unescape(text)
@@ -257,7 +268,7 @@ def cats():
             "client_id": PETFINDER_CLIENT_ID,
             "client_secret": PETFINDER_CLIENT_SECRET
         }
-
+        cats_req = None
         url = "https://api.petfinder.com/v2/oauth2/token"
 
         response_get_token = requests.post(url, data=json.dumps(data))
@@ -268,7 +279,7 @@ def cats():
             cats_req = requests.get(f"https://api.petfinder.com/v2/animals?type=cat&status"
                                     f"=adoptable&location={user_zip_code}&distance=20&limit=3",
                                     headers=headers)
-            return cats_req.json()
+        return cats_req.json()
 
     cats_petfinder = get_cats()
 
