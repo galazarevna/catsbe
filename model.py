@@ -38,9 +38,13 @@ class User(db.Model):
         return f"<User user_id={self.user_id} email={self.email} zip_code={self.zip_code}>"
 
     def as_dict(self):
+        """Convert user's info to dictionary."""
+
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def ping(self):
+        """Update last_seen date and time to current time."""
+
         self.last_seen = datetime.utcnow()
         db.session.add(self)
         db.session.commit()
@@ -56,18 +60,26 @@ class User(db.Model):
 
     @classmethod
     def get_by_id(cls, user_id):
+        """Return user by user id."""
+
         return cls.query.get(user_id)
 
     @classmethod
     def get_by_email(cls, email):
+        """Return user by user email."""
+
         return cls.query.filter(User.email == email).first()
 
     @classmethod
     def get_by_username(cls, username):
+        """Return user by username."""
+
         return cls.query.filter(User.username == username).first()
 
     @classmethod
     def all_users(cls):
+        """Return all users."""
+
         return cls.query.all()
 
     @classmethod
@@ -78,14 +90,14 @@ class User(db.Model):
 
     @classmethod
     def get_users_to_follow(cls, user_id, num_of_users):
-        """Gets random users except the current one"""
+        """Return random users except the current one"""
 
         return cls.query.filter(User.user_id != user_id).order_by(func.random()).limit(
             num_of_users).all()
 
     @classmethod
     def update_user_status(cls, user_id, new_status):
-        """Updates user's status"""
+        """Update user's status"""
 
         user = cls.query.get(user_id)
         user.status = new_status
@@ -125,9 +137,11 @@ class Image(db.Model):
     user = db.relationship("User", backref="images")
 
     def __repr__(self):
-        return f"<Image image_id={self.image_id} description={self.description} user_id={self.user_id}>"
+        return f"<Image image_id={self.image_id} desc={self.description} user_id={self.user_id}> "
 
     def as_dict(self):
+        """Convert image info to dictionary."""
+
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @classmethod
@@ -201,13 +215,13 @@ class Like(db.Model):
 
     @classmethod
     def get_like_by_user_and_image_id(cls, user_id, image_id):
-        """Gets like by user_id and image_id."""
+        """Return like by user_id and image_id."""
 
         return cls.query.filter_by(user_id=user_id, image_id=image_id).first()
 
     @classmethod
     def update_like(cls, user_id, image_id):
-        """Checks if the like already exists. If not - add like. If the like exists - delete
+        """Check if the like already exists. If not - add like. If the like exists - delete
         the record."""
 
         like = cls.get_like_by_user_and_image_id(user_id, image_id)
@@ -231,12 +245,7 @@ class Follower(db.Model):
     following_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), index=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # ToDo: how to backref user_id and following_id?
-    # __table_args__ = (
-    #     db.Index('follower_index', "followers_id", "following_id", unique=True),
-    # )
-
-    # https://docs.sqlalchemy.org/en/14/core/constraints.html
+    __table_args__ = (db.Index('follower_index', "followers_id", "following_id", unique=True),)
 
     def __repr__(self):
         return f"<Follower follower_id={self.follower_id}>"
@@ -257,18 +266,6 @@ class FreeItem(db.Model):
 
     def __repr__(self):
         return f"<FreeItem item_id={self.item_id} item_description={self.item_description[:10]}>"
-
-    # @classmethod
-    # def create(cls, user, movie, score):
-    #     """Create and return a new movie."""
-    #
-    #     return cls(user=user, movie=movie, score=score)
-    #
-    # @classmethod
-    # def update(cls, rating_id, new_score):
-    #     """ Update a rating given rating_id and the updated score. """
-    #     rating = cls.query.get(rating_id)
-    #     rating.score = new_score
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///catsbe", echo=True):
