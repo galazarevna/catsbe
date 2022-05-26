@@ -117,17 +117,14 @@ def photos():
     """View all photos with related info (likes) owned by user."""
 
     images_list = []
-    data = {}
-    try:
-        data = request.get_json(silent=True) or {}
-    except Exception as e:
-        print(e)
+
     if "user_id" in session:
         curr_user = session["user_id"]
-        if data:
-            photo_owner = data["user_id"]
+        if request.method == "POST":
+            photo_owner = request.json.get("user_id")
         else:
             photo_owner = curr_user
+
         images = Image.get_images_with_likes_by_user_id(photo_owner)
         for img_obj in images:
             images_dict = img_obj.as_dict()
@@ -147,7 +144,7 @@ def update_like():
     """Update like in DB."""
 
     data = request.get_json()
-    status = model.Like.update_like(data["user_id"], data["image_id"])
+    status = Like.update_like(data["user_id"], data["image_id"])
     return jsonify({"status": status})
 
 
@@ -183,9 +180,12 @@ def get_city(zip_code):
 
 @app.route("/current-user.json")
 def current_user():
+    """Returns logged-in user's info and updates last seen time"""
+
     if "user_id" in session:
         user_id = session["user_id"]
         curr_user = User.get_by_id(user_id)
+        curr_user.ping()
         user_as_dict = curr_user.as_dict()
         # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
         return user_as_dict
@@ -193,8 +193,9 @@ def current_user():
 
 @app.route("/user.json", methods=["POST"])
 def user():
+    """Returns user's info"""
+
     user_id = request.form.get("user_id")
-    print("user_id=", user_id)
     user_to_follow = User.get_by_id(user_id)
     user_as_dict = user_to_follow.as_dict()
     # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API

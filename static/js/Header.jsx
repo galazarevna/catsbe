@@ -11,7 +11,9 @@ function Header() {
             .then((result) => {
                 setUsername(result.username);
                 setStatus(result.status);
-                setLastSeen(result.last_seen);
+                let date = new Date(result.last_seen);
+                date = date.toLocaleString();
+                setLastSeen(date);
             });
     }, []);
 

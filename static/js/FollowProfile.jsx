@@ -15,7 +15,7 @@ function FollowProfile() {
     React.useEffect(() => {
         const data = new FormData();
         data.append("user_id", followerId);
-        fetch('/user.json', {
+        fetch("/user.json", {
             method: "POST",
             body: data
         })
@@ -25,7 +25,9 @@ function FollowProfile() {
                 setAboutMe(result.about_me);
                 setImageFile(result.image_file);
                 setCity(result.city);
-                setLastSeen(result.last_seen);
+                let date = new Date(result.last_seen);
+                date = date.toLocaleString();
+                setLastSeen(date);
                 setStatus(result.status);
             });
     }, []);
