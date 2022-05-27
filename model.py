@@ -279,6 +279,17 @@ def connect_to_db(flask_app, db_uri="postgresql:///catsbe", echo=True):
     print("Connected to the db!")
 
 
+def example_data():
+    """Create example data for the test database."""
+
+    User.query.delete()
+    user = User(username="Gelios", email="Gelios@gmail.com", password="Gelios_pwd", confirmed=True,
+                about_me="Sun 24/7", breed="Tabby Ginger", status="Happy!", last_seen="2021-05-15",
+                zip_code="94070", lat="37.4975165", lng="-122.2710602")
+    db.session.add(user)
+    db.session.commit()
+
+
 if __name__ == "__main__":
     from server import app
 
