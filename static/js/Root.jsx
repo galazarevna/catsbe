@@ -5,15 +5,6 @@ function Root() {
   return (
     <Router>
       <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/users-nearby">Find users nearby</Link>
-          </li>
-        </ul>
-
         <Switch>
           <Route path="/" exact>
             <App />

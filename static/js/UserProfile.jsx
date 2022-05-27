@@ -2,7 +2,8 @@ function UserProfile() {
 
     const [about_me, setAboutMe] = React.useState("");
     const [zip_code, setZipCode] = React.useState(0);
-    const [image_file, setImageFile] = React.useState("");
+    const [image_file, setImageFile] = React.useState("static/img/default.jpg");
+    const [breed, setBreed] = React.useState("");
     const [city, setCity] = React.useState("");
     const [file, setFile] = React.useState("");
     const [uploadStatus, setUploadStatus] = React.useState(false);
@@ -17,6 +18,7 @@ function UserProfile() {
                 setAboutMe(result.about_me);
                 setImageFile(result.image_file);
                 setCity(result.city);
+                setBreed(result.breed);
             });
     }, []);
 
@@ -64,7 +66,8 @@ function UserProfile() {
             {button ? <button onClick={uploadNewPhoto}>Apply changes</button> : ""}
             {uploadStatus ? <p>Photo updated!</p> : ""}
             <p>About me: {about_me}</p>
-            <p>From: <a href={location}> {city}</a></p>
+            <p>Breed: {breed} </p>
+            {/* <p>From: <a href={location}> {city}</a></p> */}
         </div>
     );
 }

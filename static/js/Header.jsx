@@ -32,6 +32,8 @@ function Header() {
 
     return (
         <header className="page-header">
+            <Link className="home" id="home" to="/"> <img className="logo" src="static/img/home_icon.jpeg" alt="home" /></Link>
+            <Link className="home" id="explore" to="/users-nearby"> <img className="logo" src="static/img/globe.webp" alt="explore" /></Link>
             <h1>Hi {username}!</h1>
             <main>
                 <p>Last seen: {last_seen}</p>
@@ -40,6 +42,8 @@ function Header() {
                 </label>
                 <input type="text" placeholder="What's on your mind?" style={{ display }} onClick={() => setDisplay("")} id="status" name="status" onBlur={handleStatus} />
             </main>
+            <Link className="home" id="settings" to="/settings"> <img className="logo" src="static/img/settings_icon.png" alt="settings" /></Link>
+            <Link className="home" id="explore" to="/logout"> <img className="logo" src="static/img/logout_icon.png" alt="logout" /></Link>
         </header>
     );
 }

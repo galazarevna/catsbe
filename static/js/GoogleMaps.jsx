@@ -78,8 +78,11 @@ function GoogleMaps() {
     });
 
     return (
-        <div>
-            Explore users nearby!
-        </div>
+        <React.Fragment>
+            <Header />
+            <div>
+                Explore users nearby!
+            </div>
+        </React.Fragment>
     )
 }

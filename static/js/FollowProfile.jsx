@@ -11,6 +11,7 @@ function FollowProfile() {
     const [city, setCity] = React.useState("");
     const [status, setStatus] = React.useState("");
     const [last_seen, setLastSeen] = React.useState("");
+    const [breed, setBreed] = React.useState("");
 
     React.useEffect(() => {
         const data = new FormData();
@@ -23,6 +24,7 @@ function FollowProfile() {
             .then((result) => {
                 setZipCode(result.zip_code);
                 setAboutMe(result.about_me);
+                setBreed(result.breed);
                 setImageFile(result.image_file);
                 setCity(result.city);
                 let date = new Date(result.last_seen);
@@ -38,9 +40,9 @@ function FollowProfile() {
         <div className="profile">
             <img className="profile-img" src={image_file} alt="profile picture" />
             <p>About me: {about_me}</p>
-            <p>From: <a href={location}> {zip_code}</a></p>
             <p>Last seen: {last_seen}</p>
             <p>Status: {status} </p>
+            <p>Breed: {breed} </p>
             {/* <p>From: <a href={location}> {city}</a></p> */}
 
         </div>
