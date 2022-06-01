@@ -77,12 +77,5 @@ function GoogleMaps() {
         document.body.appendChild(script);
     });
 
-    return (
-        <React.Fragment>
-            <Header />
-            <div>
-                Explore users nearby!
-            </div>
-        </React.Fragment>
-    )
+    return ("")
 }

@@ -12,7 +12,6 @@ function App() {
 
   return (
     <React.Fragment>
-      <Header />
       <UserProfile />
       <UserPhotosContainer />
       {/* <AllPhotosContainer /> */}

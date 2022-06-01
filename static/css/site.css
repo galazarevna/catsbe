@@ -14,37 +14,42 @@ div.profile {
 }
 
 body {
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-family: 'Delius', cursive;
 }
 
 img.logo {
-  height: 2em;
-  height: 2em;
+  height: 1.6em;
+  font: bold calc(1em + 2 * (100vw - 120px) / 100) 'Dancing Script', cursive,
+    fantasy;
+  margin: 6%;
+  color: #fff;
 }
-
 
 img {
   height: 20em;
   /* border-radius: 3px; */
   /* border: 3px solid grey; */
-  height: 20em;
 }
 
 .profile-img {
   height: 20em;
   border-radius: 3px;
   border: 3px solid grey;
-  height: 20em;
 }
 
 header.page-header {
   background: rgb(14, 174, 186);
-  display: flex;
-  height: 120px;
-  min-width: 120px;
   align-items: center;
   color: #fff;
   text-shadow: #000 0 0 .2em;
+  display: grid;
+  grid-template-columns: 0.005fr 0.8fr 0.5fr 1fr 5fr 3fr 0.5fr 0.5fr 0.005fr;
+  grid-gap: 20px;
+  width: 100%;
+}
+
+div.last-seen {
+  text-align: right;
 }
 
 header.page-header>h1 {
@@ -53,21 +58,25 @@ header.page-header>h1 {
   margin: 2%;
 }
 
-.home {
-  font: bold calc(1em + 2 * (100vw - 120px) / 100) 'Dancing Script', cursive,
-    fantasy;
-  margin: 2%;
-  color: #fff;
-}
-
 main {
   font: 1em 'Fira Sans', sans-serif;
 }
 
 footer {
-  display: flex;
-  justify-content: center;
-  padding: 5px;
-  background-color: #45a1ff;
+  background-color: rgb(71, 108, 155);
   color: #fff;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 0.005fr 1fr 1fr 1fr 0.005fr;
+  grid-gap: 20px;
+  width: 100%;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+
+h1.show {
+  transition: opacity 300ms;
+}
+
+h1.hide {
+  opacity: 0;
 }

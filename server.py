@@ -308,11 +308,13 @@ def cats():
 def update_status():
     """Updates user's status in DB"""
 
-    status = request.form.get("status")
+    status = False
+    user_status = request.form.get("status")
     if "user_id" in session:
         user_id = session["user_id"]
-        User.update_user_status(user_id, status)
-    return "success"
+        User.update_user_status(user_id, user_status)
+        status = True
+    return jsonify({"success": status})
 
 
 if __name__ == "__main__":

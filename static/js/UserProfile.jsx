@@ -8,12 +8,20 @@ function UserProfile() {
     const [file, setFile] = React.useState("");
     const [uploadStatus, setUploadStatus] = React.useState(false);
     const [button, setButton] = React.useState(false);
-
+    const [display, setDisplay] = React.useState("none");
+    const [last_seen, setLastSeen] = React.useState("");
+    const [status, setStatus] = React.useState("");
+    const [username, setUsername] = React.useState("");
 
     React.useEffect(() => {
         fetch("/current-user.json")
             .then(response => response.json())
             .then((result) => {
+                setUsername(result.username);
+                setStatus(result.status);
+                let date = new Date(result.last_seen);
+                date = date.toLocaleString();
+                setLastSeen(date);
                 setZipCode(result.zip_code);
                 setAboutMe(result.about_me);
                 setImageFile(result.image_file);
@@ -57,8 +65,28 @@ function UserProfile() {
         setButton(true)
     }
 
+    const handleStatus = (e) => {
+        setStatus(e.target.value);
+        setDisplay("none");
+        const data = new FormData();
+        data.append("status", e.target.value);
+        fetch("/update-status", {
+            method: "POST",
+            body: data
+        })
+            .catch((err) => console.log(err));
+    };
+
     return (
         <div className="profile">
+            <main>
+                <h1>Hi {username}!</h1>
+                <p>Last seen: {last_seen}</p>
+                <label htmlFor="status">
+                    <p>Status: {status} </p>
+                </label>
+                <input type="text" placeholder="What's on your mind?" style={{ display }} onClick={() => setDisplay("")} id="status" name="status" onBlur={handleStatus} />
+            </main>
             <input type="file" id="upload" accept="image/*" style={{ display: "none" }} onChange={fileHandler}></input>
             <label htmlFor="upload">
                 <img className="profile-img" src={image_file} alt="profile picture" />
