@@ -47,8 +47,8 @@ function UsersToFollowContainer() {
 
   return (
     <React.Fragment>
-      <div className="users-to-follow" style={{ backgroundColor: '#CCE6F4', borderRadius: '12px' }}>
-        <h4 style={{ textAlign: 'center'}}>Users to follow</h4>
+      <div className="users-to-follow">
+        <h4>Users to follow</h4>
         <div className="users-to-follow-grid">{all_users}</div>
       </div>
     </React.Fragment>

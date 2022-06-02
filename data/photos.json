@@ -40,5 +40,17 @@
     "img_url": "static/uploads/koshmars_pumpkin.jpeg",
     "date_uploaded": "2022-02-15",
     "user_id": "8"
+  },
+  {
+    "description": "Training!",
+    "img_url": "static/uploads/boeng_nature_2.jpeg",
+    "date_uploaded": "2022-05-15",
+    "user_id": "5"
+  },
+  {
+    "description": "Enjoying summer with my human!",
+    "img_url": "static/uploads/boeng_nature.jpeg",
+    "date_uploaded": "2022-05-15",
+    "user_id": "5"
   }
 ]

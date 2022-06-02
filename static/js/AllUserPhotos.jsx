@@ -71,22 +71,24 @@ function AddPhoto(props) {
 
   return (
     <React.Fragment>
-      <h2>Add New Photo</h2>
-      <label htmlFor="descriptionInput">
-        Description
-        <input
-          value={description}
-          onChange={event => setDescription(event.target.value)}
-          id="descriptionInput"
-          style={{ marginLeft: '5px' }}
-        />
-      </label>
-      <label htmlFor="photoUpload" style={{ marginLeft: '10px', marginRight: '5px' }}>
-        <input type="file" accept="image/jpeg" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
-      </label>
-      <button type="button" style={{ marginLeft: '10px' }} onClick={uploadNewPhoto} >
-        Add Photo!
-      </button>
+      <div className="add-photo">
+        <h4>Add New Photo</h4>
+        <label htmlFor="descriptionInput">
+          Description
+          <input
+            value={description}
+            onChange={event => setDescription(event.target.value)}
+            id="descriptionInput"
+            style={{ marginLeft: '5px' }}
+          />
+        </label>
+        <label htmlFor="photoUpload" style={{ marginLeft: '10px', marginRight: '5px' }}>
+          <input type="file" accept="image/jpeg" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
+        </label>
+        <button type="button" style={{ marginLeft: '10px', borderRadius: '12px'}} onClick={uploadNewPhoto} >
+          Add Photo!
+        </button>
+      </div >
     </React.Fragment>
   );
 }
@@ -127,12 +129,13 @@ function UserPhotosContainer() {
   return (
     <React.Fragment>
       <div>
-      <AddPhoto addPhoto={addPhoto} />
+        <AddPhoto addPhoto={addPhoto} />
       </div>
       <h2>All Photos</h2>
-      <div className="grid">{all_photos}</div>
-      {/* <div>{all_photos}</div> */}
-
+      <div className="overflow-auto">
+        <div className="grid">{all_photos}</div>
+        {/* <div>{all_photos}</div> */}
+      </div>
     </React.Fragment>
   );
 }

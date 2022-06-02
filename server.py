@@ -162,7 +162,6 @@ def process_login():
         # Log in user by storing the user's username in session
         session["user_id"] = curr_user.user_id
         curr_user.ping()
-        flash(f"Welcome back, {curr_user.username}!")
     return redirect("/")
 
 

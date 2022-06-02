@@ -1,15 +1,17 @@
 .grid {
   display: grid;
-  grid-template-columns: 3fr 3fr;
+  grid-template-columns: 3fr 3fr 3fr;
   grid-gap: 40px;
   align-items: center;
 }
 
 div.users-to-follow {
-  /* width: auto; */
   height: 250px;
   margin: 1em;
   padding: 1em;
+  text-align: center;
+  background-color: #CCE6F4;
+  border-radius: 12px;
 }
 
 div.users-to-follow-grid {
@@ -35,6 +37,17 @@ div.users-to-follow-grid {
   /* Take full size */
   height: 80px;
   width: 80px;
+}
+
+div.add-photo {
+  width: auto;
+  height: 100px;
+  margin: 1em;
+  padding: 1em;
+  justify-content: center;
+  /* display: inline-block; */
+  background-color: #CCE6F4;
+  border-radius: 12px;
 }
 
 div.profile {
@@ -89,7 +102,7 @@ header.page-header>h1 {
 }
 
 footer {
-  background-color: rgb(71, 108, 155);
+  background-color: rgb(65, 99, 143);
   color: #fff;
   align-items: center;
   display: grid;
@@ -143,48 +156,46 @@ img.hide {
   justify-items: center;
 } */
 
-.adopt-box {
-  background-color: rgb(71, 108, 155);
-  color: #fff;
-  align-items: center;
-  border: 1px solid black;
-  padding-block: 2%;
+div.adopt-box {
+  height: auto;
+  margin: 1em;
+  padding-top: 1em;
+  padding-bottom: 3em;
+  border-radius: 12px;
+  background-color: #FFE4F3;
   text-align: center;
-  width: 96.6%;
-  margin-left: 1.7%;
-  margin-right: 1.7%;
-  margin-bottom: 0.5em;
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  padding-left: 5em;
+  padding-right: 5em;
+
 }
 
-.adopt {
+div.adopt-grid {
   display: grid;
-  grid-template-columns: 0.005fr 3fr 3fr 3fr 0.005fr;
-  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5em;
   align-items: center;
-  font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
 div.cat {
-  border-radius: 3px;
-  border: 3px solid grey;
-  display: grid;
-  grid-template-rows: 8% 15% 7% 10%;
-  grid-gap: 2px;
+  height: 650px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 6em;
+  padding-right: 6em;
+  border-radius: 12px;
+  background-color: #FFEEF2;
+}
 
-
-  width: 93%;
-  height: 93%;
-  padding: 2%;
-  margin: auto;
-
+div.cat-photo-wrapper {
+  height: 400px;
+  vertical-align: middle;
+  display: table-cell;
 }
 
 img.cat-photo {
   height: auto;
   border-radius: 3px;
   border: 3px solid grey;
-  /* justify-self: center; */
   display: inline-block;
 }
 
@@ -201,7 +212,8 @@ li>a {
   gap: 1em;
   grid-template-areas:
     "a b b"
-    "c b b";
+    "c b b"
+    "d d d";
   align-content: space-between;
 }
 
@@ -215,6 +227,10 @@ li>a {
 
 .item3 {
   grid-area: c;
+}
+
+.item4 {
+  grid-area: d;
 }
 
 div.overflow-auto {
