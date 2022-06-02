@@ -9,15 +9,11 @@ function App() {
       document.body.removeChild(el);
     } catch (error) {};
   });
+  
 
   return (
     <React.Fragment>
-      <UserProfile />
-      <UserPhotosContainer />
-      {/* <AllPhotosContainer /> */}
-      <UsersToFollowContainer />
-      {/* <AllUsersContainer /> */}
-      <AdoptCatNearMe />
+      <Body />
       <Footer />
     </React.Fragment>
   );

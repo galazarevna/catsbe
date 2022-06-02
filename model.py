@@ -26,6 +26,7 @@ class User(db.Model):
     image_file = db.Column(db.String(100), nullable=False, default="static/img/default.jpg")
     lat = db.Column(db.Float, nullable=True)
     lng = db.Column(db.Float, nullable=True)
+    city = db.Column(db.String(50))
 
     sent_messages = db.relationship("Message", foreign_keys='[Message.sender_id]',
                                     back_populates="sender",
@@ -51,12 +52,12 @@ class User(db.Model):
 
     @classmethod
     def create(cls, username, email, password, confirmed, about_me, breed, status, last_seen,
-               zip_code, lat, lng):
+               zip_code, lat, lng, city):
         """Create and return a new user."""
 
         return cls(username=username, email=email, password=password, confirmed=confirmed,
                    about_me=about_me, breed=breed, status=status, last_seen=last_seen,
-                   zip_code=zip_code, lat=lat, lng=lng)
+                   zip_code=zip_code, lat=lat, lng=lng, city=city)
 
     @classmethod
     def get_by_id(cls, user_id):
@@ -285,7 +286,7 @@ def example_data():
     User.query.delete()
     user = User(username="Gelios", email="Gelios@gmail.com", password="Gelios_pwd", confirmed=True,
                 about_me="Sun 24/7", breed="Tabby Ginger", status="Happy!", last_seen="2021-05-15",
-                zip_code="94070", lat="37.4975165", lng="-122.2710602")
+                zip_code="94070", lat="37.4975165", lng="-122.2710602", location="San Carlos")
     db.session.add(user)
     db.session.commit()
 

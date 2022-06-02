@@ -4,17 +4,16 @@ const { Link, Switch, Route } = ReactRouterDOM;
 function UserToFollow(props) {
 
   return (
-    <div className="user">
-      <Link
-        // to={`/user/${props.userId}`}
-        to={`/${props.userId}`}
-      >{props.username}</Link>
-      <h2>Name: {props.username} </h2>
-      <button type="button" style={{ marginLeft: '10px' }} >
-        {/* <button type="button" style={{ marginLeft: '10px' }} onClick={followUser} > */}
-        Follow!
-      </button>
-      <img src={props.imgUrl} />
+    <div style={{ whiteSpace: 'nowrap'}}>
+      <div className="avatar">
+        <img className="avatar-img" src={props.imgUrl} />
+      <Link to={`/${props.userId}`}>{props.username}</Link>
+          <button type="button" style={{ borderRadius: '12px', backgroundColor: '#5F0F40', color: '#fff' }} >
+            {/* <button type="button" style={{ marginLeft: '10px' }} onClick={followUser} > */}
+            Follow!
+          </button>
+      </div>
+      {/* <img src={props.imgUrl} /> */}
     </div>
   );
 }
@@ -47,8 +46,10 @@ function UsersToFollowContainer() {
 
   return (
     <React.Fragment>
-      <h3>Users to follow:</h3>
-      <div className="grid">{all_users}</div>
+      <div className="users-to-follow" style={{ backgroundColor: '#CCE6F4', borderRadius: '12px'}}>
+        <h4>Users to follow</h4>
+        <div className="users-to-follow-grid">{all_users}</div>
+      </div>
     </React.Fragment>
   );
 }

@@ -126,9 +126,13 @@ function UserPhotosContainer() {
 
   return (
     <React.Fragment>
+      <div>
       <AddPhoto addPhoto={addPhoto} />
+      </div>
       <h2>All Photos</h2>
       <div className="grid">{all_photos}</div>
+      {/* <div>{all_photos}</div> */}
+
     </React.Fragment>
   );
 }

@@ -4,26 +4,28 @@
     "email": "Gelios@gmail.com",
     "password": "Gelios_pwd",
     "confirmed": true,
-    "about_me": "Sun 24/7",
+    "about_me": "Cat Blogger",
     "breed": "Tabby Ginger",
     "status": "Happy!",
     "last_seen": "2021-05-15",
     "zip_code": "94070",
     "lat": "37.4975165",
-    "lng": "-122.2710602"
+    "lng": "-122.2710602",
+    "city": "San Carlos"
   },
   {
     "username": "fatvilly",
     "email": "fatvilly@gmail.com",
     "password": "fatvilly_pwd",
     "confirmed": true,
-    "about_me": "CatBlogger",
+    "about_me": "Sun 24/7",
     "breed": "Mixin",
     "status": "Feeling crazy!",
     "last_seen": "2021-07-30",
     "zip_code": "94060",
     "lat": "37.2051162",
-    "lng": "-122.3334258"
+    "lng": "-122.3334258",
+    "city": "Pescadero"
   },
   {
     "username": "imblackmax",
@@ -36,7 +38,8 @@
     "last_seen": "2022-04-03",
     "zip_code": "94039",
     "lat": "37.39",
-    "lng": "-122.08"
+    "lng": "-122.08",
+    "city": "Old Mountain View"
   },
   {
     "username": "thecatbkk",
@@ -49,7 +52,8 @@
     "last_seen": "2022-04-15",
     "zip_code": "94064",
     "lat": "37.48999999999999",
-    "lng": "-122.23"
+    "lng": "-122.23",
+    "city": "Centennial"
   },
   {
     "username": "bengal_boeing",
@@ -62,7 +66,8 @@
     "last_seen": "2022-05-04",
     "zip_code": "94095",
     "lat": "48.5236242",
-    "lng": "38.5785068"
+    "lng": "38.5785068",
+    "city": "Almazna"
   },
   {
     "username": "luckys_olaff",
@@ -75,7 +80,8 @@
     "last_seen": "2022-01-24",
     "zip_code": "95050",
     "lat": "37.3539663",
-    "lng": "-121.9529992"
+    "lng": "-121.9529992",
+    "city": "Santa Clara"
   },
   {
     "username": "_phill_bengal",
@@ -86,9 +92,10 @@
     "breed": "",
     "status": "",
     "last_seen": "2022-02-05",
-    "zip_code": "98076",
+    "zip_code": "98101",
     "lat": "38.0401499",
-    "lng": "14.6412925"
+    "lng": "14.6412925",
+    "city": "Seattle"
   },
   {
     "username": "KoshMars",
@@ -101,6 +108,7 @@
     "last_seen": "2022-02-27",
     "zip_code": "94019",
     "lat": "37.4903082",
-    "lng": "-122.4353995"
+    "lng": "-122.4353995",
+    "city": "Half Moon Bay"
   }
 ]

@@ -1,11 +1,11 @@
 function Cat(props) {
   return (
     <div className="cat">
-      <h2>Name: {props.name}</h2>
-      <h3 dangerouslySetInnerHTML={ {__html: props.description } }></h3>
-      <h3>{props.gender} {props.age} {props.color}</h3>
-      <h3>City: {props.city}</h3>
-      <a href={props.url}><img src={props.img} alt="cat's image" /></a>
+      <div><h2>Name: {props.name}</h2></div>
+      <div><h3 dangerouslySetInnerHTML={{ __html: props.description }}></h3></div>
+      <div><h3>{props.gender} {props.age} {props.color}</h3></div>
+      <div><h3>City: {props.city}</h3></div>
+      <div><a href={props.url}><img src={props.img} alt="cat's image" className="cat-photo"/></a></div>
     </div>
   );
 }
@@ -15,8 +15,8 @@ function AdoptCatNearMe() {
 
   React.useEffect(() => {
     fetch('/cats.json')
-    .then((response) => response.json())
-    .then((data) => setCats(data.cats))
+      .then((response) => response.json())
+      .then((data) => setCats(data.cats))
   }, [])
 
   const all_cats = [];
@@ -39,8 +39,9 @@ function AdoptCatNearMe() {
 
   return (
     <React.Fragment>
-      <h2>Adopt a cat near me</h2>
-      <div className="grid">{all_cats}</div>
+      <h1 className="adopt-box">Adopt a cat nearby</h1>
+      <div className="adopt"><div></div>{all_cats}<div></div>
+      </div>
     </React.Fragment>
   );
 }

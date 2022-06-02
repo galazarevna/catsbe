@@ -192,7 +192,7 @@ def current_user():
         curr_user = User.get_by_id(user_id)
         curr_user.ping()
         user_as_dict = curr_user.as_dict()
-        # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Zip API
+        # user_as_dict["city"] = get_city(user_as_dict["zip_code"]) # uncomment for Google API
     return user_as_dict
 
 
