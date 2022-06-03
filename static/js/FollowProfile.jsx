@@ -5,6 +5,7 @@ function FollowProfile() {
 
     let { followerId } = useParams();
 
+    const [username, setUsername] = React.useState("");
     const [about_me, setAboutMe] = React.useState("");
     const [zip_code, setZipCode] = React.useState(0);
     const [image_file, setImageFile] = React.useState("");
@@ -12,6 +13,8 @@ function FollowProfile() {
     const [status, setStatus] = React.useState("");
     const [last_seen, setLastSeen] = React.useState("");
     const [breed, setBreed] = React.useState("");
+    const [transition, setTransition] = React.useState("hide");
+
 
     React.useEffect(() => {
         const data = new FormData();
@@ -22,6 +25,8 @@ function FollowProfile() {
         })
             .then(response => response.json())
             .then((result) => {
+                setTransition("show")
+                setUsername(result.username);
                 setZipCode(result.zip_code);
                 setAboutMe(result.about_me);
                 setBreed(result.breed);
@@ -38,13 +43,17 @@ function FollowProfile() {
 
     return (
         <div className="profile">
-            <img className="profile-img" src={image_file} alt="profile picture" />
-            <p>About me: {about_me}</p>
-            <p>Last seen: {last_seen}</p>
-            <p>Status: {status} </p>
-            <p>Breed: {breed} </p>
-            {/* <p>From: <a href={location}> {city}</a></p> */}
-
+            <div>
+                <h4>About {username}: {about_me}</h4>
+            </div>
+            <div>
+                <img className={transition} src={image_file} alt="profile picture" />
+            </div>
+            <p></p>
+            <div><p>Last seen: {last_seen}</p></div>
+            <div><h6 className={transition}>Breed: {breed} </h6></div>
+            <div><h6 className={transition}>From: <a href={location}> {city}</a></h6></div>
+            <div><h6 className={transition}>Status: {status} </h6></div>
         </div>
     );
 

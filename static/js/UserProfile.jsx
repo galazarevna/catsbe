@@ -76,18 +76,21 @@ function UserProfile() {
 
     return (
         <div className="profile">
-            <div><h4>About me: {about_me}</h4></div>
+            <div>
+                <h4>About me: {about_me}</h4>
+                <p></p>
+            </div>
             <div>
                 <input type="file" id="upload" accept="image/*" style={{ display: "none" }} onChange={fileHandler}></input>
                 <label htmlFor="upload">
-                    <img className="profile-img" class={transition} src={image_file} alt="profile picture" />
+                    <img className={transition} src={image_file} alt="profile picture" />
                 </label>
                 {button ? <button onClick={uploadNewPhoto}>Apply changes</button> : ""}
                 {uploadStatus ? <p>Photo updated!</p> : ""}
             </div>
-            <div><h7 className={transition}>Breed: {breed} </h7></div>
-            <div><h7 className={transition}>From: <a href={location}> {city}</a></h7></div>
-
+            <div><h6 className={transition}>Breed: {breed} </h6></div>
+            <div><h6 className={transition}>From: <a href={location}> {city}</a></h6></div>
+            <p></p>
             <div>
                 <label htmlFor="status">
                     <h5 className={transition}>Status: {status} </h5>

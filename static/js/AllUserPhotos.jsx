@@ -30,7 +30,7 @@ function UserPhoto(props) {
         <img className="user-photo" src={props.imgUrl} alt="user-photos" />
       </div>
       <div>
-        <h5>{props.description}</h5>
+        <p>{props.description}</p>
       </div>
       <section className="likes-comments">
         <span className="heart">

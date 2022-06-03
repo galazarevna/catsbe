@@ -16,11 +16,8 @@ function Root() {
           <Route path="/users-nearby" >
             <GoogleMaps />
           </Route>
-          <Route path="/:followerId">
-            {/* <Route path="/user/:followerId"> */}
-            <FollowProfile />
-            <FollowersPhotosContainer />
-            <Footer />
+          <Route path="/:followerId" exact>
+            <BodyFollower />
           </Route>
         </Switch>
       </div>

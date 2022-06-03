@@ -9,8 +9,10 @@
 }
 
 div.users-to-follow {
-  height: 250px;
-  margin: 1em;
+  height: 220px;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 1em;
   padding: 1em;
   text-align: center;
   background-color: #CCE6F4;
@@ -22,7 +24,6 @@ div.users-to-follow-grid {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   text-align: center;
-  margin-bottom: 1em;
   margin-top: 1em;
 }
 
@@ -54,7 +55,7 @@ div.add-photo {
 
 div.all-photos {
   /* width: auto; */
-  height: 680px;
+  height: 660px;
   margin: 1em;
   padding: 1em;
   justify-content: center;
@@ -64,7 +65,7 @@ div.all-photos {
 
 div.profile {
   width: auto;
-  height: 500px;
+  height: 530px;
   margin: 1em;
   padding: 1em;
   justify-content: center;
@@ -137,6 +138,7 @@ footer {
   grid-gap: 20px;
   width: 100%;
   font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  padding-top: 1em;
 }
 
 h1.show {

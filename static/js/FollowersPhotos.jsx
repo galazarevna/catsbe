@@ -37,8 +37,10 @@ function FollowersPhotosContainer() {
 
   return (
     <React.Fragment>
-      <h2>All Photos</h2>
-      <div className="grid">{all_photos}</div>
+      <div className="all-photos">
+        <h4>User's Photos</h4>
+        <div className="grid">{all_photos}</div>
+      </div>
     </React.Fragment>
   );
 }
