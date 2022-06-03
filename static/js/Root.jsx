@@ -8,11 +8,8 @@ function Root() {
         <Header />
         <Switch>
           <Route path="/" exact>
-            <App />
+            <BodyUser />
           </Route>
-          {/* <Route path="/logout" exact>
-            <LoginPage />
-          </Route> */}
           <Route path="/users-nearby" >
             <GoogleMaps />
           </Route>

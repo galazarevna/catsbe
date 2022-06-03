@@ -80,6 +80,8 @@ function UserProfile() {
                 <h4>About me: {about_me}</h4>
                 <p></p>
             </div>
+            <div><h6 className={transition}>Breed: {breed} </h6></div>
+            <div><h6 className={transition}>From: <a href={location}> {city}</a></h6></div>
             <div>
                 <input type="file" id="upload" accept="image/*" style={{ display: "none" }} onChange={fileHandler}></input>
                 <label htmlFor="upload">
@@ -88,8 +90,6 @@ function UserProfile() {
                 {button ? <button onClick={uploadNewPhoto}>Apply changes</button> : ""}
                 {uploadStatus ? <p>Photo updated!</p> : ""}
             </div>
-            <div><h6 className={transition}>Breed: {breed} </h6></div>
-            <div><h6 className={transition}>From: <a href={location}> {city}</a></h6></div>
             <p></p>
             <div>
                 <label htmlFor="status">
