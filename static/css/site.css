@@ -248,3 +248,8 @@ li>a {
 .item4 {
   grid-area: d;
 }
+
+button.heart-button {
+  border: none;
+  background: none;
+}
