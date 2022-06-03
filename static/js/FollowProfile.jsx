@@ -49,7 +49,6 @@ function FollowProfile() {
             <div>
                 <img className={transition} src={image_file} alt="profile picture" />
             </div>
-            <p></p>
             <div><p>Last seen: {last_seen}</p></div>
             <div><h6 className={transition}>Breed: {breed} </h6></div>
             <div><h6 className={transition}>From: <a href={location}> {city}</a></h6></div>
