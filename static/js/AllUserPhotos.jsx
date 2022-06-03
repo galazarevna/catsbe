@@ -25,9 +25,13 @@ function UserPhoto(props) {
   }
 
   return (
-    <div className="photo">
-      <img src={props.imgUrl} alt="user-photos" />
-      <h4>Description: {props.description}</h4>
+    <div className="user-photo-wrapper">
+      <div>
+        <img className="user-photo" src={props.imgUrl} alt="user-photos" />
+      </div>
+      <div>
+        <h5>{props.description}</h5>
+      </div>
       <section className="likes-comments">
         <span className="heart">
           <button className="heart-button" onClick={HandleLike}>
@@ -72,7 +76,8 @@ function AddPhoto(props) {
   return (
     <React.Fragment>
       <div className="add-photo">
-        <h4>Add New Photo</h4>
+        <h4>The World Is Waiting for Your New Photo!</h4>
+        <p></p>
         <label htmlFor="descriptionInput">
           Description
           <input
@@ -85,8 +90,8 @@ function AddPhoto(props) {
         <label htmlFor="photoUpload" style={{ marginLeft: '10px', marginRight: '5px' }}>
           <input type="file" accept="image/jpeg" onChange={(e) => setImage(e.target.files[0])} id="photoUpload" />
         </label>
-        <button type="button" style={{ marginLeft: '10px', borderRadius: '12px'}} onClick={uploadNewPhoto} >
-          Add Photo!
+        <button type="button" style={{ marginLeft: '10px', borderRadius: '12px' }} onClick={uploadNewPhoto} >
+          Add Photo
         </button>
       </div >
     </React.Fragment>
@@ -131,10 +136,9 @@ function UserPhotosContainer() {
       <div>
         <AddPhoto addPhoto={addPhoto} />
       </div>
-      <h2>All Photos</h2>
-      <div className="overflow-auto">
+      <div className="all-photos">
+        <h4>Your Photos</h4>
         <div className="grid">{all_photos}</div>
-        {/* <div>{all_photos}</div> */}
       </div>
     </React.Fragment>
   );

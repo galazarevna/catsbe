@@ -12,7 +12,7 @@ function UserToFollow(props) {
       <p></p>
       <div><button type="button" style={{ borderRadius: '12px', backgroundColor: '#5F0F40', color: '#fff' }} >
         {/* <button type="button" style={{ marginLeft: '10px' }} onClick={followUser} > */}
-        Follow!
+        Follow
       </button>
       </div>
     </div>
