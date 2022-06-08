@@ -1,0 +1,30 @@
+[
+  {
+    "user_id": "2",
+    "img_url": "static/uploads/2_fatvilly_avatar.jpg"
+  },
+  {
+    "user_id": "3",
+    "img_url": "static/uploads/3_imblackmax_avatar.jpg"
+  },
+  {
+    "user_id": "4",
+    "img_url": "static/uploads/4_thecatbkk_avatar.jpg"
+  },
+  {
+    "user_id": "5",
+    "img_url": "static/uploads/5_boeng_avatar.jpeg"
+  },
+  {
+    "user_id": "6",
+    "img_url": "static/uploads/6_luckys_olaff_avatar.jpg"
+  },
+  {
+    "user_id": "7",
+    "img_url": "static/uploads/7__phill_bengal_avatar.jpg"
+  },
+  {
+    "user_id": "8",
+    "img_url": "static/uploads/8_koshmars_avatar.jpg"
+  }
+]

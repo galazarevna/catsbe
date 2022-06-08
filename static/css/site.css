@@ -202,14 +202,14 @@ div.cat {
   padding-top: 1em;
   padding-bottom: 1em;
   padding-left: 6em;
-  padding-right: 6em;
+  padding-right: 4em;
   border-radius: 12px;
   background-color: #FFEEF2;
 }
 
 div.cat-photo-wrapper {
-  height: 400px;
-  vertical-align: middle;
+  height: auto;
+  vertical-align: bottom;
   display: table-cell;
 }
 

@@ -85,3 +85,13 @@ with open("data/likes.json") as f:
 
     model.db.session.add_all(likes_in_db)
     model.db.session.commit()
+
+# Load avatars from JSON file
+with open("data/avatars.json") as f:
+    avatars = json.loads(f.read())
+
+    # Create users, store them in a list
+    for avatar in avatars:
+        user_id, img_url = (avatar["user_id"], avatar["img_url"])
+
+        model.User.update_profile_img(user_id, img_url)

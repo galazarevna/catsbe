@@ -6,22 +6,22 @@
     "user_id": "1"
   },
   {
-    "description": "Happy easter!",
-    "img_url": "static/uploads/happy_easter.jpeg",
+    "description": "New toy!",
+    "img_url": "static/uploads/lizard_fatvilly.jpg",
     "date_uploaded": "2021-05-15",
-    "user_id": "1"
+    "user_id": "2"
   },
   {
-    "description": "Chilling...",
-    "img_url": "static/uploads/chilling.jpeg",
+    "description": "Happy X-mas!",
+    "img_url": "static/uploads/christmas_fatvilly.jpg",
     "date_uploaded": "2021-05-15",
-    "user_id": "1"
+    "user_id": "2"
   },
   {
     "description": "Enjoy your meal!",
-    "img_url": "static/uploads/enjoy_your_meal.jpeg",
+    "img_url": "static/uploads/crab_fatvilly.jpg",
     "date_uploaded": "2021-05-15",
-    "user_id": "1"
+    "user_id": "2"
   },
   {
     "description": "Got a letter from my best friend from Siberia",
